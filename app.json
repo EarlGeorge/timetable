@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Blank Template",
-    "slug": "timetable",
+    "name": "Timetable",
+    "slug": "bus-timetable-app",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
@@ -18,13 +18,19 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 30000
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.davituri.timetable",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.davituri.timetable",
+      "versionCode": 1
     }
   }
 }

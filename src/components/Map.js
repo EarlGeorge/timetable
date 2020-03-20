@@ -1,12 +1,9 @@
 import React from 'react'
-import { View, Button, StyleSheet } from "react-native"
-import { useNavigation } from '@react-navigation/native'
+import { View, StyleSheet } from 'react-native'
 import MapView from 'react-native-maps'
 import night from '../assets/night.json'
 
-const Map = ({ lat, long, polylineCoords, markerDb }) => {
-
-    const navigation = useNavigation()
+const Map = ({ lat, long, polylineCoords, markerDb, onPressHandler }) => {
 
     const markers = () => {
         if (markerDb != null) {
@@ -17,13 +14,14 @@ const Map = ({ lat, long, polylineCoords, markerDb }) => {
                 }
 
                 const metadata = `Bus Station: ${marker.Name}`;
-
+                
                 return (
                     <MapView.Marker
                         key={index}
                         coordinate={coords}
                         title={marker.StopId}
                         description={metadata}
+                        onPress={onPressHandler}
                     />
                 )
             })

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { StyleSheet, Platform } from 'react-native'
-import { NavigationContainer, DrawerActions } from '@react-navigation/native'
+import { NavigationContainer, DrawerActions, useNavigation, useFocusEffect } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createDrawerNavigator } from '@react-navigation/drawer'
@@ -21,6 +21,19 @@ const Tab = createBottomTabNavigator()
 
 
 const Drawerr = ({ navigation }) => {
+
+
+    useFocusEffect(
+        React.useCallback(() => {
+            alert('Screen was focused');
+            // Do something when the screen is focused
+            return () => {
+                alert('Screen was unfocused');
+                // Do something when the screen is unfocused
+                // Useful for cleanup functions
+            };
+        }, [])
+    );
 
     useEffect(() => {
         let unsubscribe = navigation.addListener('tabPress', () => {
@@ -75,6 +88,8 @@ const Drawerr = ({ navigation }) => {
 }
 
 function MyTabs() {
+    const navigation = useNavigation()
+
     return (
         <Tab.Navigator
             initialRouteName="Stations"
@@ -105,11 +120,11 @@ function MyTabs() {
             />
             <Tab.Screen
                 name="Menu"
-                component={Drawerr}
+                component={Favorites}
                 options={{
                     tabBarLabel: 'Menu',
                     tabBarIcon: ({ color, size }) => (
-                        <AntDesign name="swap" color={color} size={size} />
+                        <AntDesign name="swap" color={color} size={size} onPress={() => navigation.toggleDrawer()} />
                     ),
                 }}
             />
@@ -117,23 +132,34 @@ function MyTabs() {
     );
 }
 
-function MyStack() {
-    return (
-        <Stack.Navigator>
-            <Stack.Screen name="MyTabs" component={MyTabs} options={{
-                headerTitle: 'Map',
-                headerMode: "float",
-                mode: "modal"
-            }} />
-            <Stack.Screen name="Timetable" component={Timetable} />
-        </Stack.Navigator>
-    );
-}
+{/* <Stack.Screen
+      name="Home"
+      component={HomeScreen}
+      options={{
+        headerLeft: () => (
+          <View>
+            <Icon
+              onPress={() => navigation.toggleDrawer()}
+              name="menu"
+            />
+          </View>
+        ),
+      }}
+/> */}
+
 
 const Route = () => {
     return (
         <NavigationContainer>
-            <MyStack />
+            <Stack.Navigator>
+                <Stack.Screen name="MyTabs" component={MyTabs} options={{
+                    headerTitle: 'Map',
+                    headerMode: "float",
+                    mode: "modal"
+                }} />
+                <Stack.Screen name="Timetable" component={Timetable} />
+                <Stack.Screen name="Drawerr" component={Drawerr} />
+            </Stack.Navigator>
         </NavigationContainer>
     )
 }
