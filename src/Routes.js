@@ -6,14 +6,12 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { AntDesign, MaterialCommunityIcons, Entypo } from '@expo/vector-icons'
 
-import MapDemo from './components/MapDemo'
-
 // Screens 
 import Favorites from './screens/Favorites'
 import Stations from './screens/Stations'
 import About from './screens/About'
 import Timetable from './screens/Timetable'
-
+import LangSettings from './screens/LangSettings'
 
 const Drawer = createDrawerNavigator()
 const Stack = createStackNavigator()
@@ -60,13 +58,6 @@ const Drawerr = ({ navigation }) => {
                 component={About}
                 options={{
                     drawerIcon: () => <AntDesign name="swap" size={37} color="#d5d9de" />
-                }}
-            />
-            <Drawer.Screen
-                name="Bus Map Demo"
-                component={MapDemo}
-                options={{
-                    drawerIcon: () => <MaterialCommunityIcons name="earth" size={37} color="#d5d9de" />
                 }}
             />
             <Drawer.Screen
@@ -159,6 +150,7 @@ const Route = () => {
                 }} />
                 <Stack.Screen name="Timetable" component={Timetable} />
                 <Stack.Screen name="Drawerr" component={Drawerr} />
+                <Stack.Screen name="LangSettings" component={LangSettings} />
             </Stack.Navigator>
         </NavigationContainer>
     )

@@ -3,11 +3,11 @@ import { View, StyleSheet } from 'react-native'
 import MapView from 'react-native-maps'
 import night from '../assets/night.json'
 
-const Map = ({ lat, long, polylineCoords, markerDb, onPressHandler }) => {
+const Map = ({ lat, long, polylineSource, markerSource, onPressHandler }) => {
 
     const markers = () => {
-        if (markerDb != null) {
-            return markerDb.map((marker, index) => {
+        if (markerSource != null) {
+            return markerSource.map((marker, index) => {
                 const coords = {
                     latitude: marker.Lat,
                     longitude: marker.Lon
@@ -21,7 +21,7 @@ const Map = ({ lat, long, polylineCoords, markerDb, onPressHandler }) => {
                         coordinate={coords}
                         title={marker.StopId}
                         description={metadata}
-                        onPress={onPressHandler}
+                        onPress={() => onPressHandler(marker.StopId)}
                     />
                 )
             })
@@ -31,7 +31,7 @@ const Map = ({ lat, long, polylineCoords, markerDb, onPressHandler }) => {
     const polyline = () => {
 
         return <MapView.Polyline
-            coordinates={polylineCoords}
+            coordinates={polylineSource}
             strokeWidth={4}
             strokeColor="red"
         />
