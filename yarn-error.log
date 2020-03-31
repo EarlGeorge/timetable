@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add i18n-js
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add expo-localization@~8.0.0
 
 PATH: 
   C:\Users\asust\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\asust\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Docker\Docker\Resources\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Yarn\bin;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit;C:\Program Files\nodejs;C:\Users\asust\AppData\Local\Programs\Python\Python38-32\Scripts;C:\Users\asust\AppData\Local\Programs\Python\Python38-32;C:\Users\asust\AppData\Local\Microsoft\WindowsApps;C:\Users\asust\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\asust\AppData\Local\Yarn\bin;C:\Users\asust\AppData\Roaming\npm;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'C:\Users\asust\Desktop\timetable\node_modules\@babel\generator\node_modules\.bin'
+  Error: EPERM: operation not permitted, unlink 'C:\Users\asust\Desktop\timetable\node_modules\@react-native-community\cli-tools\node_modules\.bin'
 
 npm manifest: 
   {
@@ -34,6 +34,7 @@ npm manifest:
       "@react-navigation/stack": "^5.0.5",
       "expo": "~36.0.0",
       "expo-localization": "~8.0.0",
+      "i18n-js": "^3.5.1",
       "react": "~16.9.0",
       "react-dom": "~16.9.0",
       "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",

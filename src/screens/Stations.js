@@ -31,7 +31,7 @@ const Stations = () => {
 
   }, [])
 
-  const openTimetable = (stopId) => { navigation.navigate('Timetable', { stationTimetableId: stopId }) }
+  const openTimetable = (stopId, name) => { navigation.navigate('Timetable', { stationTimetableId: stopId, metadata:name }) }
 
   return (
     <View style={styles.container}>

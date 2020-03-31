@@ -6,53 +6,60 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { AntDesign, MaterialCommunityIcons, Entypo } from '@expo/vector-icons'
 
+import { useTranslation } from 'react-i18next'
+
 // Screens 
 import Favorites from './screens/Favorites'
 import Stations from './screens/Stations'
 import About from './screens/About'
 import Timetable from './screens/Timetable'
-import LangSettings from './screens/LangSettings'
+
 
 const Drawer = createDrawerNavigator()
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
 
 
-const Drawerr = ({ navigation }) => {
-
+const Drawerr = () => {
+    const navigation = useNavigation()
 
     useFocusEffect(
         React.useCallback(() => {
-            alert('Screen was focused');
+            // alert('Screen was focused');
             // Do something when the screen is focused
+
+            let unsubscribe = navigation.addListener('tabPress', () => {
+                navigation.dispatch(DrawerActions.toggleDrawer());
+            })
             return () => {
-                alert('Screen was unfocused');
+                // alert('Screen was unfocused');
                 // Do something when the screen is unfocused
                 // Useful for cleanup functions
+                unsubscribe;
             };
-        }, [])
+        }, [navigation])
     );
 
-    useEffect(() => {
-        let unsubscribe = navigation.addListener('tabPress', () => {
-            // Prevent default behavior
-            // e.preventDefault();
-            navigation.dispatch(DrawerActions.toggleDrawer());
+    // useEffect(() => {
+    //     let unsubscribe = navigation.addListener('tabPress', () => {
+    //         // Prevent default behavior
+    //         // e.preventDefault();
+    //         navigation.dispatch(DrawerActions.toggleDrawer());
 
-            // alert('Default behavior prevented');
-            // Do something manually
-            // ...
-        });
+    //         // alert('Default behavior prevented');
+    //         // Do something manually
+    //         // ...
+    //     });
 
-        return unsubscribe;
-    }, [navigation]);
+    //     return unsubscribe;
+    // }, [navigation]);
     // tabLongPress: (navigation) => {
     //     //your code and other stuff 
     //     navigation.dispatch(DrawerActions.toggleDrawer());
     // }
 
     return (
-        <Drawer.Navigator initialRouteName="Stations" >
+        <Drawer.Navigator  >
             <Drawer.Screen
                 name="About"
                 component={About}
@@ -60,26 +67,27 @@ const Drawerr = ({ navigation }) => {
                     drawerIcon: () => <AntDesign name="swap" size={37} color="#d5d9de" />
                 }}
             />
-            <Drawer.Screen
+            {/* <Drawer.Screen
                 name="Stations"
                 component={Stations}
                 options={{
                     drawerIcon: () => <Entypo name="info" size={37} color="#d5d9de" />
                 }}
-            />
-            <Drawer.Screen
+            /> */}
+            {/* <Drawer.Screen
                 name="Timetable"
                 component={Timetable}
                 options={{
                     drawerIcon: () => <Entypo name="bookmark" size={37} color="#d5d9de" />
                 }}
-            />
+            /> */}
         </Drawer.Navigator>
     );
 }
 
 function MyTabs() {
     const navigation = useNavigation()
+    const { t } = useTranslation()
 
     return (
         <Tab.Navigator
@@ -89,11 +97,12 @@ function MyTabs() {
             }}
         >
             <Tab.Screen
-                name="Feed"
+                name="Favorites"
                 component={Favorites}
                 tabBarOptions={styles.containerStyle}
                 options={{
-                    tabBarLabel: 'Favorites',
+                    headerTitle: `${t('routes.favorites')}`,
+                    tabBarLabel: `${t('routes.favorites')}`,
                     tabBarIcon: ({ color, size }) => (
                         <MaterialCommunityIcons name="home" color={color} size={size} style={{ ...styles.containerStyle }} />
                     ),
@@ -103,7 +112,7 @@ function MyTabs() {
                 name="Stations"
                 component={Stations}
                 options={{
-                    tabBarLabel: 'Stations',
+                    tabBarLabel: `${t('routes.stations')}`,
                     tabBarIcon: ({ color, size }) => (
                         <Entypo name="location" color={color} size={size} />
                     ),
@@ -111,7 +120,7 @@ function MyTabs() {
             />
             <Tab.Screen
                 name="Menu"
-                component={Favorites}
+                component={Drawerr}
                 options={{
                     tabBarLabel: 'Menu',
                     tabBarIcon: ({ color, size }) => (
@@ -140,17 +149,18 @@ function MyTabs() {
 
 
 const Route = () => {
+    const { t } = useTranslation()
     return (
         <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Screen name="MyTabs" component={MyTabs} options={{
-                    headerTitle: 'Map',
+                    headerTitle: `${t('routes.stations')}`,
+                    // headerShown: false,
                     headerMode: "float",
                     mode: "modal"
                 }} />
-                <Stack.Screen name="Timetable" component={Timetable} />
+                <Stack.Screen name="Timetable" component={Timetable} options={{ title: t('timetable.title') }} />
                 <Stack.Screen name="Drawerr" component={Drawerr} />
-                <Stack.Screen name="LangSettings" component={LangSettings} />
             </Stack.Navigator>
         </NavigationContainer>
     )
