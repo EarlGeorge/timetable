@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 // import AsyncStorage from '@react-native-community/async-storage'
-import { View, Text, StyleSheet, RefreshControl, Button, AsyncStorage } from 'react-native'
+import { View, Text, StyleSheet, RefreshControl, Button, AsyncStorage, Alert } from 'react-native'
 import { useTranslation } from 'react-i18next'
 
 // Component
@@ -14,15 +14,15 @@ function wait(timeout) {
 
 // bus station Timetable screen 
 const Timetable = ({ route }) => {
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
     const { stationTimetableId, metadata } = route.params
 
     const [busList, setBusList] = useState([])
     const endPointEn = `sorry API is hidden`
     const endPointGe = `sorry API is hidden`
-    
-    const endPoint = i18n.language == 'en' ? (endPointEn) : (endPointGe)
 
+    const endPoint = i18n.language == 'en' ? (endPointEn) : (endPointGe)
+    
     // TestFavorite:Bookmarks
     let metainfo = { station: stationTimetableId, info: metadata }
 
@@ -33,7 +33,11 @@ const Timetable = ({ route }) => {
         fetch(endPoint, { signal })
             .then(res => res.json())
             .then(data => setBusList(data.ArrivalTime))
-            .catch(err => console.log(err))
+            .catch(err => console.log(err), Alert.alert(
+                t('timetable.error'),
+                t('timetable.server_err'),
+                [{ text: t('timetable.cancel') }]
+            ))
 
         // clean up
         return () => controller.abort()
@@ -55,69 +59,36 @@ const Timetable = ({ route }) => {
     const saveFavoritehHandler = () => {
         //  AsyncStorage.removeItem('TestFavorite')
 
-        const metaArray = []
-
         AsyncStorage.getItem('TestFavorite', async (err, result) => {
             if (result == null) {
 
-                let array = JSON.parse(result)
-                metaArray.push(array, metainfo)
-                await AsyncStorage.setItem('TestFavorite', JSON.stringify(metaArray))
+                let array = (JSON.parse(result))
+                array = ([metainfo])
+                await AsyncStorage.setItem('TestFavorite', JSON.stringify(array))
 
             } else if (result !== null) {
 
                 let array = JSON.parse(result)
-                array.push(metainfo)
-                await AsyncStorage.setItem('TestFavorite', JSON.stringify(array))
+                let onAlert
 
-            } else {
-                console.log('Data Not Found')
-                AsyncStorage.setItem('TestFavorite', JSON.stringify(metainfo))
+                array.forEach((value) => {
+                    if (value.station == stationTimetableId) {
+                        Alert.alert('', t('timetable.favorite'), [{ text: t('timetable.cancel') }])
+                        onAlert = true
+                    }
+                })
+                
+                if (onAlert !== true) {
+                    array.push(metainfo)
+                    AsyncStorage.setItem('TestFavorite', JSON.stringify(array))
+                }
             }
         })
-    }
-
-    const [array, setArray] = useState([])
-
-    const showFavorite = async () => {
-
-        AsyncStorage.getItem('TestFavorite')
-            .then(res => setArray(JSON.parse(res)) )
-            .catch(error => console.log('Couldnt load!' + error))
-
-        // console.log(activities + 'is my Async stored');
-
-        // try {
-        //   const value = await AsyncStorage.getItem('TestFavorite')
-        //   if(value !== null) {
-        //     // value previously stored
-        //     setArray(JSON.parse(value))
-        //   }
-        // } catch(e) {
-        //   // error reading value
-        // }
-
-        
-
-        // var object = array.reduce(
-        //     (obj, item) => Object.assign(obj, { [item.station]: item.info }), {});
-        // var object = array.reduce((obj, item) => (obj[item.key] = item.value, obj) ,{})
-    }
-
-    const show = () => {
-        // console.log(busList + 'bus')
-        console.log(array)
     }
 
     return (
         <View style={styles.container}>
             <Text style={styles.info}>{t('timetable.station')} {stationTimetableId}</Text>
-           
-            <View style={styles.listItem}>
-                <Text>{t('timetable.bus')}</Text>
-                <Text>{t('timetable.direction')}</Text>
-                <Text>{t('timetable.time')}</Text>
-            </View>
 
             <Button
                 onPress={saveFavoritehHandler}
@@ -125,19 +96,11 @@ const Timetable = ({ route }) => {
                 color="#841584"
             />
 
-            <Button
-                onPress={showFavorite}
-                title="show F"
-                color="#841584"      
-            />
-
-            <Button
-                onPress={show}
-                title="show array"
-                color="#841584"
-            />
-
-            {/* <Text>Live next arrivals, based on the vehicle's GPS location.</Text> */}
+            <View style={styles.listItem}>
+                <Text>{t('timetable.bus')}</Text>
+                <Text>{t('timetable.direction')}</Text>
+                <Text>{t('timetable.time')}</Text>
+            </View>
 
             <MyFlatList
                 setData={busList}

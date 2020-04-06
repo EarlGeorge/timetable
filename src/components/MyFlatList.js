@@ -38,7 +38,7 @@ function Item({ title, time, bus }) {
         )
     } else {
         willBeIn = (
-            <Text>{time} min</Text>
+            <Text>in {time} min</Text>
         )
     }
 

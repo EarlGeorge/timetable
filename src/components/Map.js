@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet,Text } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import MapView from 'react-native-maps'
 import night from '../assets/night.json'
 import { Asset } from 'expo-asset'
@@ -10,7 +10,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 const Map = ({ lat, long, polylineSource, markerSource, onPressHandler }) => {
 
     const markers = () => {
-        if (markerSource != null) {
+        if (markerSource !== null) {
             return markerSource.map((marker, index) => {
                 const coords = {
                     latitude: marker.Lat,
@@ -26,12 +26,12 @@ const Map = ({ lat, long, polylineSource, markerSource, onPressHandler }) => {
                         title={marker.StopId}
                         description={metadata}
                         onPress={() => onPressHandler(marker.StopId, marker.Name)}
-                   
+
                     />
-                     // icon={require('../assets/images/bus-station.svg')}
-                     // image={require('../assets/images/bus-station.svg')}
-                  
-                     //     {/* <View style={styles.circle}>
+                    // icon={require('../assets/images/bus-station.svg')}
+                    // image={require('../assets/images/bus-station.svg')}
+
+                    //     {/* <View style={styles.circle}>
                     //         <Text style={styles.pinText}>{marker.Name}</Text>
                     //     </View>
                     // </MapView.Marker > */}
@@ -40,42 +40,44 @@ const Map = ({ lat, long, polylineSource, markerSource, onPressHandler }) => {
         }
     }
 
-const polyline = () => {
+    const polyline = () => {
 
-    return <MapView.Polyline
-        coordinates={polylineSource}
-        strokeWidth={4}
-        strokeColor="red"
-    />
+        return <MapView.Polyline
+            coordinates={polylineSource}
+            strokeWidth={4}
+            strokeColor="red"
+        />
 
+    }
+
+    return (
+        <View style={{ flex: 1 }}>
+            <MapView
+                style={{ flex: 1 }}
+                provider="google"
+                region={{
+                    latitude: lat,
+                    longitude: long,
+                    latitudeDelta: 0.1022,
+                    longitudeDelta: 0.0451
+                }}
+                customMapStyle={night}
+                showsUserLocation={true}
+                showsMyLocationButton={true}
+                followsUserLocation={true}
+                loadingEnabled={true}
+                loadingBackgroundColor={'red'}
+            >
+
+                {markers()}
+                {polyline()}
+
+            </MapView>
+        </View>
+    )
 }
 
-return (
-    <View style={{ flex: 1 }}>
-        <MapView
-            style={{ flex: 1 }}
-            provider="google"
-            region={{
-                latitude: lat,
-                longitude: long,
-                latitudeDelta: 0.1022,
-                longitudeDelta: 0.0451
-            }}
-            customMapStyle={night}
-            showsUserLocation={true}
-            showsMyLocationButton={true}
-            followsUserLocation={true}
-            loadingEnabled={true}
-            loadingBackgroundColor={'red'}
-        >
-
-            {markers()}
-            {polyline()}
-
-        </MapView>
-    </View>
-)
-}
+export default Map
 
 const styles = StyleSheet.create({
     container: {
@@ -98,9 +100,7 @@ const styles = StyleSheet.create({
     pinText: {
         color: 'white',
         fontWeight: 'bold',
-     
+
         fontSize: 4,
     },
 })
-
-export default Map

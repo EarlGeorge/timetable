@@ -14,9 +14,11 @@
     "@react-navigation/native": "^5.0.2",
     "@react-navigation/stack": "^5.0.5",
     "expo": "~36.0.0",
+    "formik": "^2.1.4",
     "i18next": "^19.3.4",
     "i18next-chained-backend": "^2.0.1",
     "i18next-localstorage-backend": "^3.1.1",
+    "i18next-react-native-async-storage": "^1.0.2",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-i18next": "^11.3.4",
@@ -26,7 +28,9 @@
     "react-native-reanimated": "~1.4.0",
     "react-native-safe-area-context": "0.6.0",
     "react-native-screens": "2.0.0-alpha.12",
-    "react-native-web": "~0.11.7"
+    "react-native-sendgrid": "^1.0.1",
+    "react-native-web": "~0.11.7",
+    "yup": "^0.28.3"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

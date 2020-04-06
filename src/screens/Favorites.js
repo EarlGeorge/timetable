@@ -1,81 +1,123 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Button, StyleSheet, TouchableOpacity, FlatList, Picker, AsyncStorage } from 'react-native'
+import { View, Text, StyleSheet, FlatList, AsyncStorage, TouchableHighlight, Modal, Button, TouchableOpacity } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import { useNavigation, useFocusEffect } from '@react-navigation/native'
 
-function Item({ title }) {
+function Separator() {
+    return <View style={styles.separator} />;
+}
+
+function Item({ station, info }) {
+    const navigation = useNavigation()
+
+    const { t } = useTranslation()
+
+    const [modalVisible, setModalVisible] = useState(false)
+
+    const onDeleteHandler = () => {
+
+        AsyncStorage.getItem('TestFavorite', async (err, result) => {
+            if (result !== null) {
+
+                let array = (JSON.parse(result))
+                let deleteItem = array.filter(item => item.station !== station)
+                await AsyncStorage.setItem('TestFavorite', JSON.stringify(deleteItem))
+            }
+        })
+
+        setModalVisible(!modalVisible)
+    }
+
     return (
-        <View style={styles.item}>
-            <Text style={styles.title}>{title}</Text>
-        </View>
+        <TouchableHighlight style={styles.touchableHighlight}
+            onPress={() => { navigation.navigate('Timetable', { stationTimetableId: station }) }}
+            onLongPress={() => setModalVisible(true)}
+            delayLongPress={25}
+            activeOpacity={0.1}
+            underlayColor={'rgba(186, 207, 222, 0.7)'}
+        >
+            <View style={styles.item}>
+
+                <Separator />
+
+                <Text style={styles.title}>{info}</Text>
+
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => setModalVisible(!modalVisible)}
+                >
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+
+                            <Text style={styles.modalText}>{t('favorites.modal')}</Text>
+
+                            <Text>{station}</Text>
+
+                            <Button
+                                title={t('favorites.modalButtonYes')}
+                                onPress={onDeleteHandler}
+                                color="red"
+                            />
+                            {/* <Button
+                                title={t('favorites.modalButtonNo')}
+                                onPress={() => setModalVisible(!modalVisible)}
+                            /> */}
+
+                            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)} style={styles.button}>
+                                <Text style={styles.buttonText}>{t('favorites.modalButtonNo')}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
+            </View>
+        </TouchableHighlight>
     );
 }
 
 const Favorites = () => {
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
+    const navigation = useNavigation()
 
-    let [list, setList] = useState()
+    const [list, setList] = useState()
+
+    const [refreshing, setRefreshing] = useState(false)
 
     useEffect(() => {
 
+        const unsubscribe = navigation.addListener('focus', () => {
+            AsyncStorage.getItem('TestFavorite')
+                .then(res => setList(JSON.parse(res)))
+                .catch(error => console.log('Couldnt load!' + error))
+        })
+
+        // Cleanup
+        return unsubscribe
+
+    }, [navigation])
+
+
+    const onRefreshHandler = () => {
+        setRefreshing(true)
+
         AsyncStorage.getItem('TestFavorite')
             .then(res => setList(JSON.parse(res)))
-            
-            .catch(error => console.log('Couldnt load!' + error))
-                // console.log(list)
-    }, [])
-
-    const showFavorite = () => {
-        console.log(list)
-    }
-
-    const listview
-    if (list !== null) {
-        listview = (<FlatList
-            data={list}
-            renderItem={({ item }) => <Item title={item} />}
-            keyExtractor={item => item}
-        />)
-    }
-
-
-    /**
-     * change App language and store it in AsyncStorage
-     */
-    const [appLanguage, setAppLanguage] = useState()
-
-    const listLanguage = [
-        { key: 'en', label: 'English 🇬🇧' },
-        { key: 'ge', label: 'ქართული 🇬🇪' },
-    ]
-    const onChangeLanguage = async (languageSelected) => {
-        setAppLanguage(languageSelected)
-        AsyncStorage.setItem('APPLanguage', JSON.stringify(languageSelected))
-        await i18n.changeLanguage(languageSelected)
+            .then(() => { setRefreshing(false) })
     }
 
 
     return (
         <View style={styles.container}>
-            <Text>{t('timetable.title')}</Text>
-            <Picker
-                style={{ height: 250, width: 250 }}
-                selectedValue={appLanguage}
-                onValueChange={onChangeLanguage}
-            >
-                {listLanguage.map((languageItem, i) => {
-                    return <Picker.Item key={i} value={languageItem.key} label={languageItem.label} />
-                })}
-            </Picker>
+            <Text>{t('favorites.title')}</Text>
 
-            {/* { listview }  */}
-        
-            <Button
-                onPress={showFavorite}
-                title="show F"
-                color="#841584"
-                accessibilityLabel=""
+            <FlatList
+                data={list}
+                renderItem={({ item }) => <Item info={item.info} station={item.station} />}
+                keyExtractor={item => item.station}
+                onRefresh={onRefreshHandler}
+                refreshing={refreshing}
             />
-
         </View>
     )
 }
@@ -94,6 +136,68 @@ const styles = StyleSheet.create({
     section: {
         marginTop: 32,
         paddingHorizontal: 24,
+    },
+
+    touchableHighlight: {
+        // alignItems: "center",
+        padding: 10
+    },
+    item: {
+        width: '100%'
+    },
+    title: {
+        margin: 1,
+        width: '100%',
+        fontSize: 15,
+    },
+
+    button: {
+        borderRadius: 15,
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        // backgroundColor: '#f0f6ff',
+        top: 20
+    },
+    buttonText: {
+        color: '#99b1c2',
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        fontSize: 17,
+        textAlign: 'center',
+    },
+
+    modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
+
+
+    textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center"
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: "center"
+    },
+
+
+    separator: {
+        marginVertical: 8,
+        borderBottomColor: '#737373',
+        borderBottomWidth: StyleSheet.hairlineWidth,
     },
 })
 

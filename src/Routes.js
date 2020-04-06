@@ -5,7 +5,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { AntDesign, MaterialCommunityIcons, Entypo } from '@expo/vector-icons'
-
 import { useTranslation } from 'react-i18next'
 
 // Screens 
@@ -13,6 +12,7 @@ import Favorites from './screens/Favorites'
 import Stations from './screens/Stations'
 import About from './screens/About'
 import Timetable from './screens/Timetable'
+import Feedback from './screens/Feedback'
 
 
 const Drawer = createDrawerNavigator()
@@ -161,6 +161,11 @@ const Route = () => {
                 }} />
                 <Stack.Screen name="Timetable" component={Timetable} options={{ title: t('timetable.title') }} />
                 <Stack.Screen name="Drawerr" component={Drawerr} />
+                <Stack.Screen
+                    name="Feedback"
+                    component={Feedback}
+                    options={{ headerTitle: `${t('routes.feedback')}`}}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     )

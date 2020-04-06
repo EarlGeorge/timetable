@@ -8,12 +8,12 @@ import Map from '../components/Map'
 import jsonData from '../DB.json'
 
 // Stations Screen
-const Stations = () => {
+export default Stations = () => {
   const navigation = useNavigation()
 
   let [location, setLocation] = useState({
-    lat: '',
-    long: ''
+    lat: 1,
+    long: 1, 
   })
   let [db, setDb] = useState({
     markers: [],
@@ -31,7 +31,11 @@ const Stations = () => {
 
   }, [])
 
-  const openTimetable = (stopId, name) => { navigation.navigate('Timetable', { stationTimetableId: stopId, metadata:name }) }
+  // Opens Timetable screen which takes some props from map marker 
+  const openTimetable = (stopId, name) => {
+    navigation.navigate('Timetable',
+      { stationTimetableId: stopId, metadata: name })
+  }
 
   return (
     <View style={styles.container}>
@@ -49,10 +53,6 @@ const Stations = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
     backgroundColor: "#bacfde"
   }
 })
-
-export default Stations
