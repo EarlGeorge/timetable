@@ -51,6 +51,9 @@ function Item({ title, time, bus }) {
     )
 }
 
+/**
+ * FlatList Component
+**/
 const MyFlatList = ({ setData, refreshHandler }) => {
 
     return (

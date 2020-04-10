@@ -4,7 +4,7 @@ import { Formik } from 'formik'
 import * as yup from 'yup'
 
 /**
- * Formik TextInput Form 
+ * Formik TextInput Form: stateless component
 **/
 export default Form = ({ onSubmitHandler,
     namePlaceholder,

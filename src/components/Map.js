@@ -1,14 +1,15 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View } from 'react-native'
 import MapView from 'react-native-maps'
 import night from '../assets/night.json'
-import { Asset } from 'expo-asset'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
-// const imageURI = Asset.fromModule(require('../assets/images/robot-dev.png')).uri
-// const imageURI = (<MaterialCommunityIcons name="bus-clock" size={37} color="#d5d9de" />)
+
+/**
+ * Google Map: stateless Component
+**/
 
 const Map = ({ lat, long, polylineSource, markerSource, onPressHandler }) => {
 
+    // MapView Markers 
     const markers = () => {
         if (markerSource !== null) {
             return markerSource.map((marker, index) => {
@@ -26,26 +27,20 @@ const Map = ({ lat, long, polylineSource, markerSource, onPressHandler }) => {
                         title={marker.StopId}
                         description={metadata}
                         onPress={() => onPressHandler(marker.StopId, marker.Name)}
-
-                    />
-                    // icon={require('../assets/images/bus-station.svg')}
-                    // image={require('../assets/images/bus-station.svg')}
-
-                    //     {/* <View style={styles.circle}>
-                    //         <Text style={styles.pinText}>{marker.Name}</Text>
-                    //     </View>
-                    // </MapView.Marker > */}
+                        // icon={require('../assets/images/452386-48.png')}
+                   />
                 )
             })
         }
     }
 
-    const polyline = () => {
+    // MapView Polylines
+    const polylines = () => {
 
         return <MapView.Polyline
             coordinates={polylineSource}
             strokeWidth={4}
-            strokeColor="red"
+            strokeColor='#fff829'
         />
 
     }
@@ -54,7 +49,7 @@ const Map = ({ lat, long, polylineSource, markerSource, onPressHandler }) => {
         <View style={{ flex: 1 }}>
             <MapView
                 style={{ flex: 1 }}
-                provider="google"
+                provider='google'
                 region={{
                     latitude: lat,
                     longitude: long,
@@ -70,7 +65,8 @@ const Map = ({ lat, long, polylineSource, markerSource, onPressHandler }) => {
             >
 
                 {markers()}
-                {polyline()}
+
+                {polylines()}
 
             </MapView>
         </View>
@@ -78,29 +74,3 @@ const Map = ({ lat, long, polylineSource, markerSource, onPressHandler }) => {
 }
 
 export default Map
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        // justifyContent: 'center',
-        // alignItems: 'center',
-        backgroundColor: "#bacfde"
-    },
-    Button: {
-        width: 100,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    circle: {
-        width: 15,
-        height: 17,
-        borderRadius: 1,
-        backgroundColor: 'red',
-    },
-    pinText: {
-        color: 'white',
-        fontWeight: 'bold',
-
-        fontSize: 4,
-    },
-})

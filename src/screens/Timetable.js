@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 // import AsyncStorage from '@react-native-community/async-storage'
-import { View, Text, StyleSheet, RefreshControl, Button, AsyncStorage, Alert } from 'react-native'
+import { View, Text, StyleSheet, RefreshControl, AsyncStorage, Alert } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import { AntDesign } from '@expo/vector-icons'
 
 // Component
 import MyFlatList from '../components/MyFlatList'
@@ -13,8 +14,8 @@ function wait(timeout) {
 }
 
 // bus station Timetable screen 
-const Timetable = ({ route }) => {
-    const { t } = useTranslation()
+export default Timetable = ({ route }) => {
+    const { t, i18n } = useTranslation()
     const { stationTimetableId, metadata } = route.params
 
     const [busList, setBusList] = useState([])
@@ -22,7 +23,7 @@ const Timetable = ({ route }) => {
     const endPointGe = `sorry API is hidden`
 
     const endPoint = i18n.language == 'en' ? (endPointEn) : (endPointGe)
-    
+
     // TestFavorite:Bookmarks
     let metainfo = { station: stationTimetableId, info: metadata }
 
@@ -77,7 +78,7 @@ const Timetable = ({ route }) => {
                         onAlert = true
                     }
                 })
-                
+
                 if (onAlert !== true) {
                     array.push(metainfo)
                     AsyncStorage.setItem('TestFavorite', JSON.stringify(array))
@@ -90,10 +91,11 @@ const Timetable = ({ route }) => {
         <View style={styles.container}>
             <Text style={styles.info}>{t('timetable.station')} {stationTimetableId}</Text>
 
-            <Button
+            <AntDesign name="staro"
+                color='white'
+                size={30}
+                style={styles.favoriteIcon}
                 onPress={saveFavoritehHandler}
-                title="Favorite"
-                color="#841584"
             />
 
             <View style={styles.listItem}>
@@ -101,6 +103,7 @@ const Timetable = ({ route }) => {
                 <Text>{t('timetable.direction')}</Text>
                 <Text>{t('timetable.time')}</Text>
             </View>
+
 
             <MyFlatList
                 setData={busList}
@@ -120,6 +123,17 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#bacfde"
     },
+    info: {
+        marginTop: 5,
+        padding: 10,
+        textAlign: "center"
+    },
+    favoriteIcon: {
+        position: 'absolute',
+        alignSelf: 'flex-end',
+        top: 10,
+        paddingRight: 31,
+    },
     listItem: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -129,12 +143,6 @@ const styles = StyleSheet.create({
         padding: 15,
         marginVertical: 4,
         marginHorizontal: 15,
-    },
-    info: {
-        marginTop: 5,
-        padding: 10,
-        textAlign: "center"
     }
 })
 
-export default Timetable

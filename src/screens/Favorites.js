@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, FlatList, AsyncStorage, TouchableHighlight, Modal, Button, TouchableOpacity } from 'react-native'
 import { useTranslation } from 'react-i18next'
-import { useNavigation, useFocusEffect } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 
 function Separator() {
     return <View style={styles.separator} />;

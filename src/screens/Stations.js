@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, StatusBar } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
 // Components
@@ -39,6 +39,7 @@ export default Stations = () => {
 
   return (
     <View style={styles.container}>
+      <StatusBar hidden={false}  />
       <Map
         markerSource={db.markers}
         polylineSource={db.points}

@@ -14,39 +14,38 @@ import ge from './locales/ge'
 //      
 //         }
 // })
-let lang = ''
 
-AsyncStorage.getItem('APPLanguage')
-            .then(res => lang = JSON.parse(res))
-            .catch(error => console.log('Couldnt load!' + error))
+// let lang = ''
 
-// AsyncStorage.getItem('APPLanguage', (result) => {
-//     if (result !== null) {
-//         lang = JSON.parse(result)
-//     }
-//     else {
-//         lang = 'en'
-//     }
-// })
-console.log ( lang + 'is my lang')
-
+// console.log(lang + 'is my lang')
 let languageDetector = {
     type: 'languageDetector',
     async: true,
-    init: () => {},
-    detect: cb => cb(lang),
-    cacheUserLanguage: () => {},
+    init: () => { },
+    detect: cb => { // AsyncStorage.getItem('APPLanguage', (err, result) => {
+        //     if (result !== null) {
+        //       let lang = JSON.parse(result);
+        //       cb(lang)
+        //     }
+        //     else {
+        //       cb('en') 
+        //     }
+        // })
+    },
+    cacheUserLanguage: () => { },
 }
 
 i18next
-    .use(AsyncStoragePlugin())
-    .use(languageDetector)
     .use(initReactI18next)
+    // .use(AsyncStoragePlugin())
+    .use(languageDetector)
     .init({
-        lng: 'ge' || 'en',
+        lng: 'ge',
         debug: true,
         resources: {
             en,
             ge,
         }
     })
+
+export default i18next
