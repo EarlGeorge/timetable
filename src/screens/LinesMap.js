@@ -4,8 +4,9 @@ import { useNavigation } from '@react-navigation/native'
 // Components
 import Map from '../components/Map'
 
+export default LinesMap = ({ route }) => {
+    const { busNumber, forward } = route.params
 
-export default LinesMap = () => {
     const navigation = useNavigation()
 
     let [db, setDb] = useState({
@@ -13,7 +14,7 @@ export default LinesMap = () => {
         polylinesData: []
     })
 
-    const endPoint = `sorry API is hidden`
+    const endPoint = `http://transferen.ttc.com.ge:18080/otp/routers/ttc/schemeStops?routeNumber=${busNumber}&forward=${forward}`
 
     useEffect(() => {
 
@@ -31,7 +32,6 @@ export default LinesMap = () => {
                     })
                 })
                 .catch(err => console.log(err))
-            console.log(db.polylinesData)
 
             // Clean up
             return () => controller.abort()
@@ -46,7 +46,6 @@ export default LinesMap = () => {
         navigation.navigate('Timetable',
             { stationTimetableId: stopId, metadata: name })
     }
-
 
     return (
         <Map

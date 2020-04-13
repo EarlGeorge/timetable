@@ -23,10 +23,17 @@ export default {
             modalButtonYes: 'დიახ წავშალოთ',
             modalButtonNo: 'გაუქმება',
         },
+        lines: {
+            title: 'ავტობუსი',
+            direction: 'მიმართულება',
+            from: 'გადის:',
+            till: 'ბოლო გაჩერება:',
+        },
         about: {
             title: 'ავტობუსების განრიგი',
             info: '',
             changeLanguage: 'ენის შეცვლა',
+            madeBy: ''
         },
         feedback: {
             title: 'Feedback - ფითბექი',

@@ -8,7 +8,7 @@ export default {
     },
     timetable: {
       title: 'Timetable',
-      station: 'Station N:',
+      station: 'Station ID:',
       bus: 'Bus',
       direction: 'Direction',
       time: 'Time',
@@ -23,10 +23,17 @@ export default {
       modalButtonYes: 'Yep!',
       modalButtonNo: 'Cancel',
     },
+    lines : {
+      title: 'Bus Number',
+      direction: 'Bus route direction',
+      from: 'Starts from:',
+      till: 'till:'
+    },
     about: {
       title: 'Bus Station Timetable',
       info: "next arrivals, based on the vehicle's GPS location.",
       changeLanguage: 'Change language',
+      madeBy: ''
     },
     feedback: {
       title: 'Feedback',

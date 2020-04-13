@@ -3,7 +3,6 @@ import { StyleSheet, Platform } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
-import { createDrawerNavigator } from '@react-navigation/drawer'
 import { AntDesign, Entypo } from '@expo/vector-icons'
 import { useTranslation } from 'react-i18next'
 
@@ -14,7 +13,7 @@ import About from './screens/About'
 import Timetable from './screens/Timetable'
 import Feedback from './screens/Feedback'
 import LinesMap from './screens/LinesMap'
-
+import Lines from './screens/Lines'
 
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -56,8 +55,8 @@ function MyTabs() {
                     }}
             />
             <Tab.Screen
-                name="LinesMap"
-                component={LinesMap}
+                name="Lines"
+                component={Lines}
                 options={{
                     tabBarLabel: t('routes.stations'),
                     title: t('routes.stations'),
@@ -113,6 +112,7 @@ const Route = () => {
                     component={Feedback}
                     options={{ headerTitle: t('routes.feedback') }}
                 />
+                 <Stack.Screen name="LinesMap" component={LinesMap} options={{ title: t('timetable.title') }} />
             </Stack.Navigator>
         </NavigationContainer>
     )

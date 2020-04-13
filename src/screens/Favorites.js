@@ -125,8 +125,8 @@ const Favorites = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        // justifyContent: 'center',
+        // alignItems: 'center',
         backgroundColor: "#bacfde"
     },
     text: {
@@ -137,9 +137,8 @@ const styles = StyleSheet.create({
         marginTop: 32,
         paddingHorizontal: 24,
     },
-
     touchableHighlight: {
-        // alignItems: "center",
+        alignItems: "center",
         padding: 10
     },
     item: {
@@ -147,7 +146,6 @@ const styles = StyleSheet.create({
     },
     title: {
         margin: 1,
-        width: '100%',
         fontSize: 15,
     },
 
@@ -155,7 +153,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         paddingVertical: 10,
         paddingHorizontal: 10,
-        // backgroundColor: '#f0f6ff',
+        backgroundColor: '#f0f6ff',
         top: 20
     },
     buttonText: {
