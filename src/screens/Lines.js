@@ -54,7 +54,9 @@ function Item({ busNumber, stopA, stopB }) {
     );
 }
 
-// Bus List screen 
+/**
+ * Bus Line FlatList screen
+**/
 const Lines = () => {
     const { t, i18n } = useTranslation()
     const navigation = useNavigation()
@@ -147,7 +149,7 @@ const styles = StyleSheet.create({
     listItem: {
         flexDirection: "column",
         alignItems: 'center',
-        marginVertical: 47,
+        marginVertical: 48,
     },
     from: {
         textAlign: 'center',

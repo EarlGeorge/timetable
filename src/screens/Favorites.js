@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, FlatList, AsyncStorage, TouchableHighlight, Modal, Button, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, FlatList, AsyncStorage, TouchableHighlight, Modal, TouchableOpacity } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { useNavigation } from '@react-navigation/native'
 
-function Separator() {
-    return <View style={styles.separator} />;
-}
 
 function Item({ station, info }) {
     const navigation = useNavigation()
@@ -38,7 +35,7 @@ function Item({ station, info }) {
         >
             <View style={styles.item}>
 
-                <Separator />
+                <View style={styles.separator} />
 
                 <Text style={styles.title}>{info}</Text>
 
@@ -55,19 +52,18 @@ function Item({ station, info }) {
 
                             <Text>{station}</Text>
 
-                            <Button
-                                title={t('favorites.modalButtonYes')}
-                                onPress={onDeleteHandler}
-                                color="red"
-                            />
-                            {/* <Button
-                                title={t('favorites.modalButtonNo')}
-                                onPress={() => setModalVisible(!modalVisible)}
-                            /> */}
+                            <View style={styles.modalButtons}>
 
-                            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)} style={styles.button}>
-                                <Text style={styles.buttonText}>{t('favorites.modalButtonNo')}</Text>
-                            </TouchableOpacity>
+                                <TouchableOpacity onPress={onDeleteHandler} style={styles.modalButtonYes}>
+                                    <Text style={styles.modalButtonYesText}>{t('favorites.modalButtonYes')}</Text>
+                                </TouchableOpacity>
+
+
+                                <TouchableOpacity onPress={() => setModalVisible(!modalVisible)} style={styles.modalButtonNo}>
+                                    <Text style={styles.modalButtonNoText}>{t('favorites.modalButtonNo')}</Text>
+                                </TouchableOpacity>
+
+                            </View>
                         </View>
                     </View>
                 </Modal>
@@ -76,6 +72,9 @@ function Item({ station, info }) {
     );
 }
 
+/**
+ * Favorite Bus stations screen
+**/
 const Favorites = () => {
     const { t } = useTranslation()
     const navigation = useNavigation()
@@ -109,7 +108,7 @@ const Favorites = () => {
 
     return (
         <View style={styles.container}>
-            <Text>{t('favorites.title')}</Text>
+            <Text style={styles.aboutTop}>{t('favorites.title')}</Text>
 
             <FlatList
                 data={list}
@@ -125,9 +124,10 @@ const Favorites = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // justifyContent: 'center',
-        // alignItems: 'center',
         backgroundColor: "#bacfde"
+    },
+    aboutTop: {
+        textAlign: 'center',
     },
     text: {
         fontSize: 25,
@@ -148,22 +148,6 @@ const styles = StyleSheet.create({
         margin: 1,
         fontSize: 15,
     },
-
-    button: {
-        borderRadius: 15,
-        paddingVertical: 10,
-        paddingHorizontal: 10,
-        backgroundColor: '#f0f6ff',
-        top: 20
-    },
-    buttonText: {
-        color: '#99b1c2',
-        fontWeight: 'bold',
-        textTransform: 'uppercase',
-        fontSize: 17,
-        textAlign: 'center',
-    },
-
     modalView: {
         margin: 20,
         backgroundColor: "white",
@@ -180,18 +164,40 @@ const styles = StyleSheet.create({
         elevation: 5
     },
 
-
-    textStyle: {
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center"
+    modalButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    modalButtonYes: {
+        borderRadius: 15,
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        backgroundColor: '#f0f6ff',
+    },
+    modalButtonYesText: {
+        color: 'red',
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        fontSize: 17,
+        textAlign: 'center',
+    },
+    modalButtonNo: {
+        borderRadius: 15,
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        backgroundColor: '#f0f6ff',
+    },
+    modalButtonNoText: {
+        color: '#99b1c2',
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        fontSize: 17,
+        textAlign: 'center',
     },
     modalText: {
         marginBottom: 15,
         textAlign: "center"
     },
-
-
     separator: {
         marginVertical: 8,
         borderBottomColor: '#737373',
