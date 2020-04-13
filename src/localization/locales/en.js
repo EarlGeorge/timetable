@@ -24,16 +24,16 @@ export default {
       modalButtonNo: 'Cancel',
     },
     lines : {
-      title: 'Bus Number',
-      direction: 'Bus route direction',
+      bus: 'Bus',
+      direction: 'Route direction',
       from: 'Starts from:',
-      till: 'till:'
+      change: 'Change Direction'
     },
     about: {
       title: 'Bus Station Timetable',
       info: "next arrivals, based on the vehicle's GPS location.",
       changeLanguage: 'Change language',
-      madeBy: ''
+      madeBy: 'დავითური'
     },
     feedback: {
       title: 'Feedback',

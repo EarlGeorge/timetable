@@ -2,33 +2,54 @@ import React, { useState, useEffect } from 'react'
 import { Text, View, SafeAreaView, FlatList, TouchableOpacity, StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons'
 
-import LinesFlatList from '../components/LinesFlatList'
 import enBus from '../EN-BUS.json'
 import geBus from '../GEO-BUS.json'
 
 function Item({ busNumber, stopA, stopB }) {
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
     const navigation = useNavigation()
 
+    const [boolean, setBoolean] = useState(true)
+    //  Change Bus lines Direction
+    const changeDirectrion = () => setBoolean(!boolean)
+
+    const directrion = boolean ?
+        (<TouchableOpacity onPress={() => { navigation.navigate('LinesMap', { busNumber, forward: 0 }) }} >
+            <View style={styles.listItem}>
+                <Text>{stopA}</Text>
+                <Entypo name="arrow-long-right" color='#1f5c87' size={25} style={styles.directrionIcon} />
+                <Text>{stopB}</Text>
+            </View>
+        </TouchableOpacity>)
+        :
+        (<TouchableOpacity onPress={() => { navigation.navigate('LinesMap', { busNumber, forward: 1 }) }} >
+            <View style={styles.listItem}>
+                <Text>{stopB}</Text>
+                <Entypo name="arrow-long-right" color='#1f5c87' size={25} style={styles.directrionIcon} />
+                <Text>{stopA}</Text>
+            </View>
+        </TouchableOpacity>)
+
     return (
-        <View style={styles.container}>
+        <View>
 
             <View style={styles.separator} />
 
-            <View style={styles.wrapIcon} >
+            <View style={styles.wrapBusIcon} >
                 <MaterialCommunityIcons name="bus" color='#1f5c87' size={15} style={styles.busIcon} />
                 <Text style={styles.busNumber}>{busNumber}</Text>
             </View>
 
-            <TouchableOpacity onPress={() => { navigation.navigate('LinesMap', { busNumber, forward: 0 }) }}>
-                <Text style={styles.touchableOpacity}> {t('lines.from')} {stopA}  -> {t('lines.till')} {stopB}</Text>
+            <Text style={styles.from}>{t('lines.from')}</Text>
+
+            {directrion}
+
+            <TouchableOpacity onPress={changeDirectrion}>
+                <Text style={styles.changeDirection}>{t('lines.change')}</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => { navigation.navigate('LinesMap', { busNumber, forward: 1 }) }}>
-                <Text style={styles.touchableOpacity}> {t('lines.from')} {stopB}  -> {t('lines.till')} {stopA}</Text>
-            </TouchableOpacity>
         </View>
     );
 }
@@ -57,9 +78,9 @@ const Lines = () => {
     return (
         <SafeAreaView style={styles.container}>
 
-            <View style={styles.header}>
-                <Text>{t('lines.title')}</Text>
-                <Text>{t('lines.direction')}</Text>
+            <View>
+                <Text style={styles.bus}>{t('lines.bus')}</Text>
+                <Text style={styles.dir}>{t('lines.direction')}</Text>
             </View>
 
             <FlatList
@@ -74,14 +95,6 @@ const Lines = () => {
                 keyExtractor={item => item.RouteNumber}
             />
 
-
-            {/* <LinesFlatList
-                setData={db.busArray}
-                handlePageNavigationForward={() => { navigation.navigate('LinesMap', { busNumber, forward: 0 }) }}
-                handlePageNavigationBackward={() => { navigation.navigate('LinesMap', { busNumber, forward: 1 }) }}
-                textFrom={t('lines.from')}
-                textTill={t('lines.till')}
-            /> */}
         </SafeAreaView>
     )
 }
@@ -92,17 +105,23 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#bacfde",
+        justifyContent: 'space-between',
     },
-    header: {
-        flexDirection: 'row',
+    bus: {
+        top: 20,
+        textAlign: 'left',
+        marginHorizontal: 10,
     },
-    wrapIcon: {
+    dir: {
+        alignSelf: 'center'
+    },
+    wrapBusIcon: {
         margin: 2,
         width: 46,
         height: 25,
         borderColor: 'white',
         borderStyle: 'solid',
-        backgroundColor: "#c7dceb",
+        backgroundColor: '#c7dceb',
         borderWidth: 1.5,
         borderBottomColor: 'yellow',
         borderBottomLeftRadius: 10,
@@ -114,18 +133,32 @@ const styles = StyleSheet.create({
         right: 1,
         top: 10,
         paddingRight: 25,
-        // alignSelf: 'flex-end',
     },
     busNumber: {
         top: -10,
         marginLeft: 14,
-        // fontSize: 20,
         color: 'black',
         fontWeight: 'bold',
     },
     touchableOpacity: {
         marginLeft: 45,
         padding: 10,
+    },
+    listItem: {
+        flexDirection: "column",
+        alignItems: 'center',
+        marginVertical: 47,
+    },
+    from: {
+        textAlign: 'center',
+        color: 'black',
+        top: -10,
+        fontWeight: 'bold',
+    },
+    changeDirection: {
+        color: '#1f5c87',
+        fontWeight: 'bold',
+        textAlign: 'center',
     },
     separator: {
         marginVertical: 8,

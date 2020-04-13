@@ -24,16 +24,16 @@ export default {
             modalButtonNo: 'გაუქმება',
         },
         lines: {
-            title: 'ავტობუსი',
+            bus: 'ავტობუსი',
             direction: 'მიმართულება',
             from: 'გადის:',
-            till: 'ბოლო გაჩერება:',
+            change: 'მიმართულების შეცვლა'
         },
         about: {
             title: 'ავტობუსების განრიგი',
             info: '',
             changeLanguage: 'ენის შეცვლა',
-            madeBy: ''
+            madeBy: 'Davituri'
         },
         feedback: {
             title: 'Feedback - ფითბექი',
