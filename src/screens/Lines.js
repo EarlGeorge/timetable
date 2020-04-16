@@ -7,6 +7,8 @@ import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons'
 import enBus from '../EN-BUS.json'
 import geBus from '../GEO-BUS.json'
 
+import Button from '../components/Button'
+
 function Item({ busNumber, stopA, stopB }) {
     const { t } = useTranslation()
     const navigation = useNavigation()
@@ -46,9 +48,13 @@ function Item({ busNumber, stopA, stopB }) {
 
             {directrion}
 
-            <TouchableOpacity onPress={changeDirectrion}>
+            {/* <TouchableOpacity onPress={changeDirectrion}>
                 <Text style={styles.changeDirection}>{t('lines.change')}</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+            <Button onPress={changeDirectrion}
+                text={t('lines.change')}
+                textColor={'#1f5c87'}
+            />
 
         </View>
     );
@@ -80,7 +86,7 @@ const Lines = () => {
     return (
         <SafeAreaView style={styles.container}>
 
-            <View>
+            <View style={styles.topheader}>
                 <Text style={styles.bus}>{t('lines.bus')}</Text>
                 <Text style={styles.dir}>{t('lines.direction')}</Text>
             </View>
@@ -108,6 +114,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#bacfde",
         justifyContent: 'space-between',
+    },
+    topheader :{
+        // backgroundColor: 'red',
+        borderBottomColor: '#737373',
+        borderBottomWidth: StyleSheet.hairlineWidth,
     },
     bus: {
         top: 20,

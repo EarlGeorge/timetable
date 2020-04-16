@@ -39,7 +39,7 @@ export default Stations = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar hidden={false}  />
+      {/* <StatusBar hidden={true}  /> */}
       <Map
         markerSource={db.markers}
         polylineSource={db.points}

@@ -1,5 +1,4 @@
 import React from 'react'
-import { View } from 'react-native'
 import MapView from 'react-native-maps'
 import night from '../assets/night.json'
 
@@ -27,8 +26,8 @@ const Map = ({ lat, long, polylineSource, markerSource, onPressHandler }) => {
                         title={marker.StopId}
                         description={metadata}
                         onPress={() => onPressHandler(marker.StopId, marker.Name)}
-                        // icon={require('../assets/images/452386-48.png')}
-                   />
+                    // icon={require('../assets/images/452386-48.png')}
+                    />
                 )
             })
         }
@@ -46,30 +45,28 @@ const Map = ({ lat, long, polylineSource, markerSource, onPressHandler }) => {
     }
 
     return (
-        <View style={{ flex: 1 }}>
-            <MapView
-                style={{ flex: 1 }}
-                provider='google'
-                region={{
-                    latitude: lat,
-                    longitude: long,
-                    latitudeDelta: 0.1022,
-                    longitudeDelta: 0.0451
-                }}
-                customMapStyle={night}
-                showsUserLocation={true}
-                showsMyLocationButton={true}
-                followsUserLocation={true}
-                loadingEnabled={true}
-                loadingBackgroundColor={'red'}
-            >
+        <MapView
+            style={{ flex: 1 }}
+            provider='google'
+            region={{
+                latitude: lat,
+                longitude: long,
+                latitudeDelta: 0.1022,
+                longitudeDelta: 0.0451
+            }}
+            customMapStyle={night}
+            showsUserLocation={true}
+            showsMyLocationButton={true}
+            followsUserLocation={true}
+            loadingEnabled={true}
+            loadingBackgroundColor={'red'}
+        >
 
-                {markers()}
+            {markers()}
 
-                {polylines()}
+            {polylines()}
 
-            </MapView>
-        </View>
+        </MapView>
     )
 }
 

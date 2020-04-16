@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, Picker, AsyncStorage, Button } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { useNavigation } from '@react-navigation/native'
+import { LinearGradient } from 'expo-linear-gradient'
 
 /**
  * About this App screen and with Language setup button
@@ -40,6 +41,17 @@ const About = () => {
 
     return (
         <View style={styles.container}>
+
+            <LinearGradient
+                colors={['rgba(158,70,100,0.8)', 'transparent']}
+                style={{
+                    position: 'absolute',
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    height: 300,
+                }}
+            />
             <Text style={styles.text}>{t('about.title')}</Text>
 
             <Text style={styles.info}>{t('about.info')}</Text>
@@ -57,7 +69,7 @@ const About = () => {
             </Picker>
 
             <Button onPress={feedbackHandle} title="Feedback" />
-            
+
         </View>
     )
 }

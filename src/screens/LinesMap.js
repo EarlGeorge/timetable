@@ -14,7 +14,7 @@ export default LinesMap = ({ route }) => {
         polylinesData: []
     })
 
-    const endPoint = `http://transferen.ttc.com.ge:18080/otp/routers/ttc/schemeStops?routeNumber=${busNumber}&forward=${forward}`
+    const endPoint = `sorry API is hidden`
 
     useEffect(() => {
 

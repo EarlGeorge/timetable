@@ -1,10 +1,13 @@
 export default {
   translation: {
     routes: {
-      timetable: 'Timetable',
-      stations: 'Stations',
       favorites: 'Favorites',
-      feedback: 'Feedback'
+      stations: 'Stations',
+      timetable: 'Timetable',
+      lines: 'Lines',
+      linesMap: 'Bus Line Map',
+      feedback: 'Feedback',
+      about: 'About'
     },
     timetable: {
       title: 'Timetable',
