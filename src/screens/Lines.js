@@ -7,8 +7,6 @@ import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons'
 import enBus from '../EN-BUS.json'
 import geBus from '../GEO-BUS.json'
 
-import Button from '../components/Button'
-
 function Item({ busNumber, stopA, stopB }) {
     const { t } = useTranslation()
     const navigation = useNavigation()
@@ -36,7 +34,6 @@ function Item({ busNumber, stopA, stopB }) {
 
     return (
         <View>
-
             <View style={styles.separator} />
 
             <View style={styles.wrapBusIcon} >
@@ -48,23 +45,18 @@ function Item({ busNumber, stopA, stopB }) {
 
             {directrion}
 
-            {/* <TouchableOpacity onPress={changeDirectrion}>
+            <TouchableOpacity onPress={changeDirectrion}>
                 <Text style={styles.changeDirection}>{t('lines.change')}</Text>
-            </TouchableOpacity> */}
-            <Button onPress={changeDirectrion}
-                text={t('lines.change')}
-                textColor={'#1f5c87'}
-            />
-
+            </TouchableOpacity>
         </View>
     );
 }
 
 /**
- * Bus Line FlatList screen
+ * Bus Line screen
 **/
 const Lines = () => {
-    const { t, i18n } = useTranslation()
+    const { i18n } = useTranslation()
     const navigation = useNavigation()
 
 
@@ -85,11 +77,6 @@ const Lines = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-
-            <View style={styles.topheader}>
-                <Text style={styles.bus}>{t('lines.bus')}</Text>
-                <Text style={styles.dir}>{t('lines.direction')}</Text>
-            </View>
 
             <FlatList
                 data={db.busArray}
@@ -114,19 +101,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#bacfde",
         justifyContent: 'space-between',
-    },
-    topheader :{
-        // backgroundColor: 'red',
-        borderBottomColor: '#737373',
-        borderBottomWidth: StyleSheet.hairlineWidth,
-    },
-    bus: {
-        top: 20,
-        textAlign: 'left',
-        marginHorizontal: 10,
-    },
-    dir: {
-        alignSelf: 'center'
     },
     wrapBusIcon: {
         margin: 2,

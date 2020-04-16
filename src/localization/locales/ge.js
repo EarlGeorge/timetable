@@ -1,10 +1,17 @@
 export default {
     translation: {
         routes: {
-            timetable: 'განრიგი',
+            favorites: 'რჩეული',
+            favoritesHeader: 'რჩეული სია',
             stations: 'რუქა',
-            favorites: 'დამახსოვრებული',
-            feedback: 'Feedback - ფითბექი'
+            stationsHeader: 'გაჩერება',
+            timetable: 'განრიგი',
+            lines: 'ხაზი',
+            linesHeader: 'ავტობუსის მარშრუტი',
+            linesMap: 'მარშრუტის რუქა',
+            about: 'შესახებ',
+            aboutHeader: 'აპის შესახებ',
+            feedback: 'საკონტაქტო ფორმა',
         },
         timetable: {
             title: 'განრიგი',
@@ -33,10 +40,10 @@ export default {
             title: 'ავტობუსების განრიგი',
             info: '',
             changeLanguage: 'ენის შეცვლა',
-            madeBy: 'Davituri'
+            madeBy: 'დავითური'
         },
         feedback: {
-            title: 'Feedback - ფითბექი',
+            title: 'საკონტაქტო ფორმა',
             info: '',
             namePlaceholder: 'ჩაწერეთ თქვენი სახელი',
             emailPlaceholder: 'ჩაწერეთ თქვენი ელ-ფოსტა',

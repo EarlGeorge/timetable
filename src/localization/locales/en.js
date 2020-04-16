@@ -2,12 +2,16 @@ export default {
   translation: {
     routes: {
       favorites: 'Favorites',
+      favoritesHeader: 'Favorite Stations',
       stations: 'Stations',
+      stationsHeader: 'Bus Stations',
       timetable: 'Timetable',
       lines: 'Lines',
+      linesHeader: 'Lines Direction',
       linesMap: 'Bus Line Map',
+      about: 'About',
+      aboutHeader: 'About App',
       feedback: 'Feedback',
-      about: 'About'
     },
     timetable: {
       title: 'Timetable',

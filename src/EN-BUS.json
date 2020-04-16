@@ -762,7 +762,7 @@
             "LongName": "საბურთალო - ვაკე - ჭავჭავაძის გამზირი 41",
             "RouteNumber": "85",
             "StopA": "Saburtalo - Vake",
-            "StopB": "Saburtalo - Vake",
+            "StopB": "Chavchavadze Str. 41",
             "Type": "bus"
         },
         {
@@ -779,8 +779,8 @@
             "Id": "R216052",
             "LongName": "ბარათაშვილის ქ. - საბურთალო-ვაკე",
             "RouteNumber": "87",
-            "StopA": "Baratashvili Str.-Saburtali-Vake",
-            "StopB": "Baratashvili Str.-Saburtali-Vake",
+            "StopA": "Baratashvili Str.",
+            "StopB": "Saburtalo-Vake",
             "Type": "bus"
         },
         {

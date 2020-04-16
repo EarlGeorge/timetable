@@ -54,7 +54,7 @@ function Item({ title, time, bus }) {
 /**
  * FlatList Component
 **/
-const MyFlatList = ({ setData, refreshHandler }) => {
+const TimetableFlatList = ({ setData, refreshHandler }) => {
 
     return (
         <SafeAreaView style={styles.container}>
@@ -74,7 +74,7 @@ const MyFlatList = ({ setData, refreshHandler }) => {
     )
 }
 
-export default MyFlatList
+export default TimetableFlatList
 
 const styles = StyleSheet.create({
     container: {

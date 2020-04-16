@@ -88,13 +88,13 @@ function getHeaderTitle(route) {
 
     switch (routeName) {
         case 'Stations':
-            return t('routes.stations')
+            return t('routes.stationsHeader')
         case 'Favorites':
-            return t('routes.favorites')
+            return t('routes.favoritesHeader')
         case 'Lines':
-            return t('routes.lines')
+            return t('routes.linesHeader')
         case 'About':
-            return t('routes.about')
+            return t('routes.aboutHeader')
     }
 }
 

@@ -108,8 +108,6 @@ const Favorites = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.aboutTop}>{t('favorites.title')}</Text>
-
             <FlatList
                 data={list}
                 renderItem={({ item }) => <Item info={item.info} station={item.station} />}
@@ -125,17 +123,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#bacfde"
-    },
-    aboutTop: {
-        textAlign: 'center',
-    },
-    text: {
-        fontSize: 25,
-        fontWeight: 'bold',
-    },
-    section: {
-        marginTop: 32,
-        paddingHorizontal: 24,
     },
     touchableHighlight: {
         alignItems: "center",

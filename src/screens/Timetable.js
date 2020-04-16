@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { AntDesign } from '@expo/vector-icons'
 
 // Component
-import MyFlatList from '../components/MyFlatList'
+import TimetableFlatList from '../components/TimetableFlatList'
 
 function wait(timeout) {
     return new Promise(resolve => {
@@ -105,7 +105,7 @@ export default Timetable = ({ route }) => {
             </View>
 
 
-            <MyFlatList
+            <TimetableFlatList
                 setData={busList}
                 refreshHandler={
                     <RefreshControl
