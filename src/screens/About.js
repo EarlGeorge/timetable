@@ -43,13 +43,13 @@ const About = () => {
         <View style={styles.container}>
 
             <LinearGradient
-                colors={['rgba(158,70,100,0.8)', 'transparent']}
+                colors={['rgba(250, 250, 252, 0.5)', 'rgba(136, 179, 209,0.8)',]}
                 style={{
                     position: 'absolute',
                     left: 0,
                     right: 0,
                     top: 0,
-                    height: 300,
+                    height: '100%',
                 }}
             />
             <Text style={styles.text}>{t('about.title')}</Text>

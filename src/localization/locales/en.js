@@ -40,7 +40,7 @@ export default {
       title: 'Bus Station Timetable',
       info: "next arrivals, based on the vehicle's GPS location.",
       changeLanguage: 'Change language',
-      madeBy: 'დავითური'
+      madeBy: 'Davituri'
     },
     feedback: {
       title: 'Feedback',

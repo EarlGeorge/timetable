@@ -28,6 +28,7 @@ function MyTabs() {
             initialRouteName="Stations"
             tabBarOptions={{
                 activeTintColor: '#e91e63',
+                style: { backgroundColor: '#f7fcff' }
             }}
         >
             <Tab.Screen
@@ -106,13 +107,10 @@ export default Routes = () => {
 
     return (
         <NavigationContainer>
-            <Stack.Navigator>
+            <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#ebf7ff' } }} >
                 <Stack.Screen name="MyTabs" component={MyTabs} options={({ route }) => ({
 
-                    headerStyle: { backgroundColor: 'white' },
-                    // headerShown: false,
                     headerBackTitle: getHeaderTitle(route),
-
                     headerTitle: getHeaderTitle(route)
 
                 })} />

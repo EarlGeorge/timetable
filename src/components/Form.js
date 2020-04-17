@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback,Keyboard, StyleSheet } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 
@@ -34,53 +34,56 @@ export default Form = ({ onSubmitHandler,
             }}
         >
             {({ handleChange, handleBlur, handleSubmit, values, touched, errors }) => (
-                <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss() }}>
-                    <View>
-                        <TextInput
-                            onChangeText={handleChange('name')}
-                            onBlur={handleBlur('name')}
-                            value={values.name}
-                            placeholder={namePlaceholder}
-                            style={styles.input}
-                        />
+                <View style={styles.container}>
+                    <TextInput
+                        onChangeText={handleChange('name')}
+                        onBlur={handleBlur('name')}
+                        value={values.name}
+                        placeholder={namePlaceholder}
+                        style={styles.input}
+                    />
 
-                        <Text style={styles.error}>{touched.name && errors.name}</Text>
+                    <Text style={styles.error}>{touched.name && errors.name}</Text>
 
-                        <TextInput
-                            onChangeText={handleChange('email')}
-                            onBlur={handleBlur('email')}
-                            value={values.email}
-                            placeholder={emailPlaceholder}
-                            style={styles.input}
-                        />
+                    <TextInput
+                        onChangeText={handleChange('email')}
+                        onBlur={handleBlur('email')}
+                        value={values.email}
+                        placeholder={emailPlaceholder}
+                        style={styles.input}
+                    />
 
-                        <Text style={styles.error}>{touched.email && errors.email}</Text>
+                    <Text style={styles.error}>{touched.email && errors.email}</Text>
 
-                        <TextInput
-                            onChangeText={handleChange('message')}
-                            onBlur={handleBlur('message')}
-                            value={values.message}
-                            placeholder={messagePlaceholder}
-                            multiline minHeight={100}
-                            style={styles.input}
-                        />
+                    <TextInput
+                        onChangeText={handleChange('message')}
+                        onBlur={handleBlur('message')}
+                        value={values.message}
+                        placeholder={messagePlaceholder}
+                        multiline minHeight={100}
+                        style={styles.input}
+                    />
 
-                        <Text style={styles.error}>{touched.message && errors.message}</Text>
+                    <Text style={styles.error}>{touched.message && errors.message}</Text>
 
-                        <TouchableOpacity onPress={handleSubmit} style={styles.button}>
-                            <Text style={styles.buttonText}>{submitTitle}</Text>
-                        </TouchableOpacity>
-                    </View>
-                </TouchableWithoutFeedback>
+                    <TouchableOpacity onPress={handleSubmit} style={styles.button}>
+                        <Text style={styles.buttonText}>{submitTitle}</Text>
+                    </TouchableOpacity>
+                </View>
             )}
         </Formik>
     )
 }
 
 const styles = StyleSheet.create({
+    container: {
+        width: '100%',
+        padding: 20,
+        height: 'auto'
+    },
     input: {
         borderWidth: 1,
-        borderColor: '#f2f9fc',
+        borderColor: 'white',
         padding: 10,
         fontSize: 18,
         borderRadius: 7,

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { sendGridEmail } from 'react-native-sendgrid'
 
@@ -45,21 +45,27 @@ const Feedback = () => {
     }
 
     return (
-        <View style={styles.container}>
-            <Text>{t('feedback.title')}</Text>
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} >
+            <View style={styles.container}>
 
-            <Text>{t('feedback.info')}</Text>
+                <Text>{t('feedback.title')}</Text>
 
-            <Form onSubmitHandler={sendEmailHandler}
-                namePlaceholder={t('feedback.namePlaceholder')}
-                emailPlaceholder={t('feedback.emailPlaceholder')}
-                messagePlaceholder={t('feedback.messagePlaceholder')}
-                submitTitle={t('feedback.submitTitle')}
-                schemaRequiredName={t('feedback.schemaRequiredName')}
-                schemaRequiredEmail={t('feedback.schemaRequiredEmail')}
-                schemaRequiredMessage={t('feedback.schemaRequiredMessage')}
-            />
-        </View>
+                <Text>{t('feedback.info')}</Text>
+
+                <ScrollView>
+                    <Form onSubmitHandler={sendEmailHandler}
+                        namePlaceholder={t('feedback.namePlaceholder')}
+                        emailPlaceholder={t('feedback.emailPlaceholder')}
+                        messagePlaceholder={t('feedback.messagePlaceholder')}
+                        submitTitle={t('feedback.submitTitle')}
+                        schemaRequiredName={t('feedback.schemaRequiredName')}
+                        schemaRequiredEmail={t('feedback.schemaRequiredEmail')}
+                        schemaRequiredMessage={t('feedback.schemaRequiredMessage')}
+                    />
+                </ScrollView>
+
+            </View>
+        </TouchableWithoutFeedback >
     )
 }
 
