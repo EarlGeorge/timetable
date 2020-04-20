@@ -11,11 +11,11 @@ import jsonData from '../DB.json'
 export default Stations = () => {
   const navigation = useNavigation()
 
-  let [location, setLocation] = useState({
+  const [location, setLocation] = useState({
     lat: 1,
     long: 1,
   })
-  let [db, setDb] = useState({
+  const [db, setDb] = useState({
     markers: [],
     pointsData: [],
     points: [],
@@ -41,7 +41,6 @@ export default Stations = () => {
     <View style={styles.container}>
       <Map
         markerSource={db.markers}
-        polylineSource={db.points}
         lat={location.lat}
         long={location.long}
         onPressHandler={openTimetable}

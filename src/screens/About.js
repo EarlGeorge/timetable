@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, Picker, AsyncStorage, Button } from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, StyleSheet, Picker, Button } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
 
 /**
- * About this App screen and with Language setup button
+ * About App screen and with Language setup button
  **/
 const About = () => {
     // used for translation
@@ -13,27 +13,17 @@ const About = () => {
     // used for navigation
     const navigation = useNavigation()
 
-    const [appLanguage, setAppLanguage] = useState()
+    // change App language
+    const [appLanguage, setAppLanguage] = useState(i18n.language)
 
-    useEffect(() => {
-        // Fetch saved language 
-        AsyncStorage.getItem('APPLanguage')
-            .then(lang => setAppLanguage(JSON.parse(lang)))
-            .catch(error => console.log('Couldnt load!' + error))
-    }, [])
-
-    /**
-     * change App language and store it in AsyncStorage
-     **/
     const listLanguage = [
         { key: 'en', label: 'English 🇬🇧' },
         { key: 'ge', label: 'ქართული 🇬🇪' },
     ]
 
     const onChangeLanguage = async (languageSelected) => {
-        setAppLanguage(languageSelected)
-        AsyncStorage.setItem('APPLanguage', JSON.stringify(languageSelected))
         await i18n.changeLanguage(languageSelected)
+        setAppLanguage(languageSelected)
     }
 
     // Opens Feedback screen 
@@ -52,23 +42,22 @@ const About = () => {
                     height: '100%',
                 }}
             />
-            <Text style={styles.text}>{t('about.title')}</Text>
 
             <Text style={styles.info}>{t('about.info')}</Text>
 
-            <Text style={styles.lang}>{t('about.changeLanguage')}</Text>
+            <Text>{t('about.changeLanguage')}</Text>
 
             <Picker
-                style={{ height: 250, width: 250 }}
                 selectedValue={appLanguage}
                 onValueChange={onChangeLanguage}
+                style={styles.picker}
             >
                 {listLanguage.map((languageItem, i) => {
                     return <Picker.Item key={i} value={languageItem.key} label={languageItem.label} />
                 })}
             </Picker>
 
-            <Button onPress={feedbackHandle} title="Feedback" />
+            <Button onPress={feedbackHandle} title="Feedback" style={styles.feedback} />
 
         </View>
     )
@@ -84,14 +73,13 @@ const styles = StyleSheet.create({
         backgroundColor: "#bacfde",
         fontSize: 15,
     },
-    text: {
-        fontSize: 25,
-        fontWeight: 'bold',
-    },
     info: {
-        padding: 25,
+        top: -100,
+        padding: 20,
+        lineHeight: 20,
     },
-    lang: {
-        padding: 45,
-    }
+    picker: {
+        height: 100,
+        width: '100%',
+    },
 })

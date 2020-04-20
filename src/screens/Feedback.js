@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { sendGridEmail } from 'react-native-sendgrid'
@@ -6,9 +6,13 @@ import { sendGridEmail } from 'react-native-sendgrid'
 // Component 
 import Form from '../components/Form'
 
-const SENDGRIDAPIKEY = ''
-const TOMEMAIL = ''
-const SUBJECT = 'You have a new message'
+const CONFIG = {
+    SENDGRIDURL: "https://api.sendgrid.com/v3/mail/send"
+}
+
+const sendGridKey = '***'
+const sendTo = '***'
+const subject = 'Bus Timetable Feedback'
 
 /**
  * Feedback screen 
@@ -16,32 +20,59 @@ const SUBJECT = 'You have a new message'
 const Feedback = () => {
     const { t } = useTranslation()
 
-    const [message, setMessage] = useState({
-        name: '',
-        email: '',
-        message: '',
-    })
-
     const sendEmailHandler = (values) => {
-        // setMessage(values)
+        let sendFrom = values.email
+        // let contact = "Contact: " + values.name + " Mail: " + values.email + " Message: " + values.message
 
-        // console.log(message)
+        // sendGridEmail(sendGridKey, sendTo, sendFrom, subject, contact)
+        //     .then((res) => {
+        //         console.log("Success", res)
+        //     })
+        //     .catch((error) => {
+        //         console.log(error)
+        //     })
 
-        let FROMEMAIL = values.email
+        let contact = {
+            'Contact': values.name,
+            'Mail': values.email,
+            'Message': values.message
+        }
 
-        let ContactDetails = "Contact: " + values.name + " Mail: " + values.email + " Message: " + values.message
-
-        let sendRequest = sendGridEmail(SENDGRIDAPIKEY, TOMEMAIL, FROMEMAIL, SUBJECT, ContactDetails)
-
-        sendRequest
+        fetch('https://api.sendgrid.com/v3/mail/send', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + sendGridKey
+            },
+            body: JSON.stringify({
+                "personalizations": [
+                    {
+                        "to": [
+                            {
+                                "email": sendTo
+                            }
+                        ],
+                        "subject": subject
+                    }
+                ],
+                "from": {
+                    "email": sendFrom
+                },
+                "content": [
+                    {
+                        "type": "text/plain",
+                        "value": "Contact: " + values.name + " Mail: " + values.email + " Message: " + values.message
+                    }
+                ]
+            }),
+        })
             .then((res) => {
                 console.log("Success", res)
             })
             .catch((error) => {
                 console.log(error)
             })
-        console.log(ContactDetails)
-
     }
 
     return (

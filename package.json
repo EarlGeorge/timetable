@@ -15,8 +15,6 @@
     "expo": "~36.0.0",
     "formik": "^2.1.4",
     "i18next": "^19.3.4",
-    "i18next-chained-backend": "^2.0.1",
-    "i18next-localstorage-backend": "^3.1.1",
     "i18next-react-native-async-storage": "^1.0.2",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",

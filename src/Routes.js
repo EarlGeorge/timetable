@@ -20,7 +20,7 @@ import Lines from './screens/Lines'
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
 
-function MyTabs() {
+const BottomTab = () => {
     const { t } = useTranslation()
 
     return (
@@ -34,11 +34,10 @@ function MyTabs() {
             <Tab.Screen
                 name="Favorites"
                 component={Favorites}
-                tabBarOptions={styles.containerStyle}
                 options={{
                     title: t('routes.favorites'),
                     tabBarIcon: ({ color, size }) => (
-                        <AntDesign name="staro" color={color} size={size} style={{ ...styles.containerStyle }} />
+                        <AntDesign name="staro" color={color} size={size} />
                     ),
                 }}
             />
@@ -76,7 +75,7 @@ function MyTabs() {
     )
 }
 
-function getHeaderTitle(route) {
+const getHeaderTitle = (route) => {
     const { t } = useTranslation()
 
     // Accessing the tab navigator's state using `route.state`
@@ -107,8 +106,8 @@ export default Routes = () => {
 
     return (
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#ebf7ff' } }} >
-                <Stack.Screen name="MyTabs" component={MyTabs} options={({ route }) => ({
+            <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#ebf7ff' }, headerTitleAlign: 'center' }} >
+                <Stack.Screen name="BottomTab" component={BottomTab} options={({ route }) => ({
 
                     headerBackTitle: getHeaderTitle(route),
                     headerTitle: getHeaderTitle(route)

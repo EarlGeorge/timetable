@@ -35,13 +35,13 @@ const Map = ({ lat, long, polylineSource, markerSource, onPressHandler }) => {
 
     // MapView Polylines
     const polylines = () => {
-
-        return <MapView.Polyline
-            coordinates={polylineSource}
-            strokeWidth={4}
-            strokeColor='#fff829'
-        />
-
+        if (polylineSource != null) {
+            return <MapView.Polyline
+                coordinates={polylineSource}
+                strokeWidth={4}
+                strokeColor='#fff829'
+            />
+        }
     }
 
     return (
