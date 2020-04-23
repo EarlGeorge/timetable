@@ -4,8 +4,8 @@ import { useNavigation } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons'
 
-import enBus from '../EN-BUS.json'
-import geBus from '../GEO-BUS.json'
+import EnBus from '../DBSourceMocking/En-Bus-Lines-min.json'
+import GeBus from '../DBSourceMocking/Ge-Bus-Lines-min.json'
 
 function Item({ busNumber, stopA, stopB }) {
     const { t } = useTranslation()
@@ -67,7 +67,7 @@ const Lines = () => {
     useEffect(() => {
 
         const unsubscribe = navigation.addListener('focus', () => {
-            setDb({ busArray: i18n.language == 'en' ? (enBus.Bus) : (geBus.Bus) })
+            setDb({ busArray: i18n.language == 'en' ? (EnBus.Bus) : (GeBus.Bus) })
         })
 
         // Cleanup

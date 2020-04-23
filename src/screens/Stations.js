@@ -6,8 +6,8 @@ import { useTranslation } from 'react-i18next'
 // Components
 import Map from '../components/Map'
 
-import EnDb from '../DB.json'
-import GeDB from '../Ge-DB-min.json'
+import EnDb from '../DBSourceMocking/En-DB-min.json'
+import GeDb from '../DBSourceMocking/Ge-DB-min.json'
 
 // Stations Screen
 export default Stations = () => {
@@ -35,10 +35,10 @@ export default Stations = () => {
     const unsubscribe = navigation.addListener('focus', () => {
 
       Platform.select({
-        ios: setDb({ markers: i18n.language == 'en' ? (EnDb.Bus.Stops) : (GeDB.Stops), isLoading: false }),
+        ios: setDb({ markers: i18n.language == 'en' ? (EnDb.Stops) : (GeDb.Stops), isLoading: false }),
 
         android: setTimeout(() => {
-          setDb({ markers: i18n.language == 'en' ? (EnDb.Bus.Stops) : (GeDB.Stops), isLoading: false })
+          setDb({ markers: i18n.language == 'en' ? (EnDb.Stops) : (GeDb.Stops), isLoading: false })
         }, 4000)
       })
 
