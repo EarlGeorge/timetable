@@ -14,7 +14,6 @@ export default {
             feedback: 'საკონტაქტო ფორმა',
         },
         timetable: {
-            title: 'განრიგი',
             station: 'გაჩერება :',
             bus: 'ავტობუსი',
             direction: 'მიმართულება',
@@ -25,7 +24,6 @@ export default {
             cancel: 'დახურვა'
         },
         favorites: {
-            title: 'რჩეული სია',
             modal: 'გსურს არჩეული გაჩერების წაშლა?',
             modalButtonYes: 'დიახ წავშალოთ',
             modalButtonNo: 'გაუქმება',
@@ -37,20 +35,20 @@ export default {
             change: 'მიმართულების შეცვლა'
         },
         about: {
-            title: 'ავტობუსების განრიგი',
             info: 'აპლიკაციის საშუალებით თქვენ შეგიძლიათ ნახოთ ავტობუსების განრიგი ლაივ რეჟიმში, და ასევე მისი გადაადგილების მიმართულებები.',
             changeLanguage: 'ენის შეცვლა',
-            madeBy: 'დავითური'
+            madeBy: 'შექმნილია დავითურის მიერ.',
+            copyright: '© ',
+            feedbackButton: 'კონტაქტი'
         },
         feedback: {
-            title: 'საკონტაქტო ფორმა',
-            info: '',
+            info: 'შეცდომის დაფიქსირების შემთხვევაში მოგვწერეთ ან არ შეამჩნიოთ..',
             namePlaceholder: 'ჩაწერეთ თქვენი სახელი',
             emailPlaceholder: 'ჩაწერეთ თქვენი ელ-ფოსტა',
             messagePlaceholder: 'მოგვწერეთ თქვენი მოსაზრება!',
             submitTitle: 'გაგზავნა',
-            schemaRequiredName: 'ჩაწერე შენი სახელი',
-            schemaRequiredEmail: 'გამოტოვებულია ი-მეილის გრაფა',
+            schemaRequiredName: 'გამოგრჩათ სახელი',
+            schemaRequiredEmail: 'გამოტოვებულია მეილის გრაფა',
             schemaRequiredMessage: 'გამოგრჩათ წერილის ჩაწერა'
         }
     }

@@ -2,13 +2,11 @@ import React from 'react'
 import { View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { sendGridEmail } from 'react-native-sendgrid'
+import { LinearGradient } from 'expo-linear-gradient'
 
 // Component 
 import Form from '../components/Form'
 
-const CONFIG = {
-    SENDGRIDURL: "https://api.sendgrid.com/v3/mail/send"
-}
 
 const sendGridKey = '***'
 const sendTo = '***'
@@ -21,69 +19,39 @@ const Feedback = () => {
     const { t } = useTranslation()
 
     const sendEmailHandler = (values) => {
-        let sendFrom = values.email
-        // let contact = "Contact: " + values.name + " Mail: " + values.email + " Message: " + values.message
+        const sendFrom = values.email
 
-        // sendGridEmail(sendGridKey, sendTo, sendFrom, subject, contact)
-        //     .then((res) => {
-        //         console.log("Success", res)
-        //     })
-        //     .catch((error) => {
-        //         console.log(error)
-        //     })
-
-        let contact = {
+        const contact = JSON.stringify({
             'Contact': values.name,
             'Mail': values.email,
             'Message': values.message
-        }
-
-        fetch('https://api.sendgrid.com/v3/mail/send', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + sendGridKey
-            },
-            body: JSON.stringify({
-                "personalizations": [
-                    {
-                        "to": [
-                            {
-                                "email": sendTo
-                            }
-                        ],
-                        "subject": subject
-                    }
-                ],
-                "from": {
-                    "email": sendFrom
-                },
-                "content": [
-                    {
-                        "type": "text/plain",
-                        "value": "Contact: " + values.name + " Mail: " + values.email + " Message: " + values.message
-                    }
-                ]
-            }),
         })
+
+        sendGridEmail(sendGridKey, sendTo, sendFrom, subject, contact)
             .then((res) => {
-                console.log("Success", res)
+                console.log('Success', res)
             })
-            .catch((error) => {
-                console.log(error)
-            })
+            .catch((err) => console.log(err))
     }
 
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} >
             <View style={styles.container}>
 
-                <Text>{t('feedback.title')}</Text>
+                <LinearGradient
+                    colors={['rgb(227, 243, 255)', 'rgb(136, 179, 209)',]}
+                    style={{
+                        position: 'absolute',
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                        height: '100%',
+                    }}
+                />
 
-                <Text>{t('feedback.info')}</Text>
+                <Text style={styles.info}>{t('feedback.info')}</Text>
 
-                <ScrollView>
+                <ScrollView style={styles.form}>
                     <Form onSubmitHandler={sendEmailHandler}
                         namePlaceholder={t('feedback.namePlaceholder')}
                         emailPlaceholder={t('feedback.emailPlaceholder')}
@@ -107,11 +75,16 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: "#bacfde",
-        fontSize: 15,
     },
-    text: {
-        fontSize: 25,
+    info: {
+        top: 20,
+        padding: 10,
+        lineHeight: 22,
         fontWeight: 'bold',
     },
+    form: {
+        top: 70,
+        width: '100%',
+        height: '100%'
+    }
 })

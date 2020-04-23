@@ -19,7 +19,7 @@ export default Form = ({ onSubmitHandler,
     * Schema for input validation
     **/
     const schema = yup.object({
-        name: yup.string().required(schemaRequiredName).min(4),
+        name: yup.string().required(schemaRequiredName),
         email: yup.string().required(schemaRequiredEmail).email(schemaRequiredEmail),
         message: yup.string().required(schemaRequiredMessage)
     })
@@ -40,6 +40,7 @@ export default Form = ({ onSubmitHandler,
                         onBlur={handleBlur('name')}
                         value={values.name}
                         placeholder={namePlaceholder}
+                        placeholderTextColor='#7e96a9'
                         style={styles.input}
                     />
 
@@ -50,6 +51,7 @@ export default Form = ({ onSubmitHandler,
                         onBlur={handleBlur('email')}
                         value={values.email}
                         placeholder={emailPlaceholder}
+                        placeholderTextColor='#7e96a9'
                         style={styles.input}
                     />
 
@@ -60,6 +62,7 @@ export default Form = ({ onSubmitHandler,
                         onBlur={handleBlur('message')}
                         value={values.message}
                         placeholder={messagePlaceholder}
+                        placeholderTextColor='#7e96a9'
                         multiline minHeight={100}
                         style={styles.input}
                     />

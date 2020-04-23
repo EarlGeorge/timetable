@@ -14,7 +14,6 @@ export default {
       feedback: 'Feedback',
     },
     timetable: {
-      title: 'Timetable',
       station: 'Station ID:',
       bus: 'Bus',
       direction: 'Direction',
@@ -25,7 +24,6 @@ export default {
       cancel: 'Cancel'
     },
     favorites: {
-      title: 'Favorites List',
       modal: 'Delete selected station?',
       modalButtonYes: 'Yep!',
       modalButtonNo: 'Cancel',
@@ -38,13 +36,14 @@ export default {
     },
     about: {
       title: 'Bus Station Timetable',
-      info: "next arrivals, based on the vehicle's GPS location.",
+      info: "View real-time arrivals, based on the vehicle's GPS location.",
       changeLanguage: 'Change language',
-      madeBy: 'Davituri'
+      madeBy: 'Developed by Davituri.',
+      copyright: '© Copyright All rights reserved.',
+      feedbackButton: 'Feedback'
     },
     feedback: {
-      title: 'Feedback',
-      info: '',
+      info: "Bug report, support or get involved, don't hesitate to contact!",
       namePlaceholder: 'Enter your Name',
       emailPlaceholder: 'e-mail',
       messagePlaceholder: 'Message',

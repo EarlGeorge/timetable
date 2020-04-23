@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, Picker, Button } from 'react-native'
+import { View, Text, StyleSheet, Picker } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
+
+// Component
+import Button from '../components/Button'
 
 /**
  * About App screen and with Language setup button
@@ -27,13 +30,13 @@ const About = () => {
     }
 
     // Opens Feedback screen 
-    const feedbackHandle = () => { navigation.navigate('Feedback') }
+    const feedbackHandler = () => { navigation.navigate('Feedback') }
 
     return (
         <View style={styles.container}>
 
             <LinearGradient
-                colors={['rgba(250, 250, 252, 0.5)', 'rgba(136, 179, 209,0.8)',]}
+                colors={['rgb(227, 243, 255)', 'rgb(136, 179, 209)']}
                 style={{
                     position: 'absolute',
                     left: 0,
@@ -45,8 +48,6 @@ const About = () => {
 
             <Text style={styles.info}>{t('about.info')}</Text>
 
-            <Text>{t('about.changeLanguage')}</Text>
-
             <Picker
                 selectedValue={appLanguage}
                 onValueChange={onChangeLanguage}
@@ -57,8 +58,18 @@ const About = () => {
                 })}
             </Picker>
 
-            <Button onPress={feedbackHandle} title="Feedback" style={styles.feedback} />
+            <View style={styles.feedback}>
+                <Button
+                    onPress={feedbackHandler}
+                    text={t('about.feedbackButton')}
+                    buttonColor='#80a7c2'
+                    textColor='white'
+                />
+            </View>
 
+            <Text style={styles.copyright}>
+                {t('about.madeBy')} {new Date().getFullYear()} {t('about.copyright')}
+            </Text>
         </View>
     )
 }
@@ -70,16 +81,26 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: "#bacfde",
-        fontSize: 15,
     },
     info: {
-        top: -100,
+        flex: 1,
+        top: 10,
         padding: 20,
         lineHeight: 20,
     },
     picker: {
-        height: 100,
-        width: '100%',
+        position: 'absolute',
+        top: 145,
+        height: 200,
+        width: 200,
     },
+    feedback: {
+        position: 'absolute',
+        bottom: 125,
+    },
+    copyright: {
+        position: 'absolute',
+        padding: 7,
+        bottom: 25
+    }
 })

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigation } from '@react-navigation/native'
 
 
-function Item({ station, info }) {
+const Item = ({ station, info }) => {
     const navigation = useNavigation()
 
     const { t } = useTranslation()
@@ -118,6 +118,7 @@ const Favorites = () => {
         </View>
     )
 }
+export default Favorites
 
 const styles = StyleSheet.create({
     container: {
@@ -191,5 +192,3 @@ const styles = StyleSheet.create({
         borderBottomWidth: StyleSheet.hairlineWidth,
     },
 })
-
-export default Favorites

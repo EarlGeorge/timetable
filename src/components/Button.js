@@ -1,9 +1,9 @@
 import React from 'react'
 import { StyleSheet, TouchableOpacity, Text } from 'react-native'
 
-export default Button = ({ text, onPress, buttonColor, textColor, buttonBRadius }) => {
+export default Button = ({ text, onPress, buttonColor, textColor }) => {
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.button, { backgroundColor: buttonColor, borderRadius: buttonBRadius }]}>
+    <TouchableOpacity onPress={onPress} style={[styles.button, { backgroundColor: buttonColor,  }]}>
       <Text style={[styles.buttonText, { color: textColor }]}>{text}</Text>
     </TouchableOpacity>
   )
@@ -11,16 +11,13 @@ export default Button = ({ text, onPress, buttonColor, textColor, buttonBRadius 
 
 const styles = StyleSheet.create({
   button: {
-    // borderRadius: 15,
-    // paddingVertical: 10,
-    // paddingHorizontal: 10,
-    // backgroundColor: '#99b1c2',
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
   },
   buttonText: {
-    // color: 'white',
     fontWeight: 'bold',
     textTransform: 'uppercase',
-    // fontSize: 17,
     textAlign: 'center',
   }
 })
