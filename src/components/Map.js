@@ -1,7 +1,7 @@
 import React from 'react'
 import MapView from 'react-native-maps'
 import night from '../assets/night.json'
-import { View, Text, StyleSheet, RefreshControl, AsyncStorage, Alert } from 'react-native'
+
 /**
  * Google Map: stateless Component
 **/
@@ -34,15 +34,15 @@ const Map = ({ lat, long, polylineSource, markerSource, onPressHandler }) => {
     // }
 
     // MapView Polylines
-    // const polylines = () => {
-    //     if (polylineSource != null) {
-    //         return <MapView.Polyline
-    //             coordinates={polylineSource}
-    //             strokeWidth={4}
-    //             strokeColor='#fff829'
-    //         />
-    //     }
-    // }
+    const polylines = () => {
+        if (polylineSource != null) {
+            return <MapView.Polyline
+                coordinates={polylineSource}
+                strokeWidth={4}
+                strokeColor='#fff829'
+            />
+        }
+    }
 
     return (
         <MapView
@@ -66,18 +66,17 @@ const Map = ({ lat, long, polylineSource, markerSource, onPressHandler }) => {
 
             {/* {markers()} */}
 
-            {markerSource[10] != null && markerSource.map((marker, index) => {
+            {markerSource[0] !== null && markerSource.map((marker, index) => {
                 const coords = {
                     latitude: marker.Lat,
                     longitude: marker.Lon
                 }
-                const metadata = marker.Name
-
+                
                 return (
                     <MapView.Marker
                         key={index}
                         coordinate={coords}
-                        title={metadata}
+                        title={marker.Name}
                         description={' '}
                         onPress={() => onPressHandler(marker.StopId, marker.Name)}
                     // icon={require('../assets/images/452386-48.png')}
@@ -86,7 +85,7 @@ const Map = ({ lat, long, polylineSource, markerSource, onPressHandler }) => {
             })
             }
 
-            {/* {polylines()} */}
+            {polylines()}
 
         </MapView>
     )

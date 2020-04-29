@@ -19,28 +19,32 @@ export default Stations = () => {
     long: 44.77002225551471,
   })
   const [db, setDb] = useState({
-    markers: [],
+    markers: null,
     pointsData: [],
     points: [],
     isLoading: true
   })
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const lat = parseFloat(position.coords.latitude)
-      const long = parseFloat(position.coords.longitude)
-      setLocation({ lat, long })
-    })
+    // navigator.geolocation.getCurrentPosition((position) => {
+    //   const lat = parseFloat(position.coords.latitude)
+    //   const long = parseFloat(position.coords.longitude)
+    //   setLocation({ lat, long })
+    // })
 
     const unsubscribe = navigation.addListener('focus', () => {
 
-      Platform.select({
-        ios: setDb({ markers: i18n.language == 'en' ? (EnDb.Stops) : (GeDb.Stops), isLoading: false }),
+      const station = i18n.language == 'en' ? (EnDb.Stops) : (GeDb.Stops)
+      
+      setDb({ markers: station, isLoading: false })
 
-        android: setTimeout(() => {
-          setDb({ markers: i18n.language == 'en' ? (EnDb.Stops) : (GeDb.Stops), isLoading: false })
-        }, 4000)
-      })
+        // Platform.select({
+        //   ios: setDb({ markers: station, isLoading: false }),
+
+        //   android: setTimeout(() => {
+        //     setDb({ markers: station, isLoading: false })
+        //   }, 4000)
+        // })
 
     })
 
@@ -60,7 +64,7 @@ export default Stations = () => {
       <Map
         lat={location.lat}
         long={location.long}
-        markerSource={db.isLoading ? ({}) : (db.markers)}
+        markerSource={db.markers}
         onPressHandler={openTimetable}
       />
     </View>
