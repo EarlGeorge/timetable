@@ -30,7 +30,7 @@ const About = () => {
     }
 
     // Opens Feedback screen 
-    const feedbackHandler = () => { navigation.navigate('Feedback') }
+    const feedbackHandler = () => navigation.navigate('Feedback')
 
     return (
         <View style={styles.container}>

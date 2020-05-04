@@ -76,7 +76,6 @@ const Item = ({ station, info }) => {
  * Favorite Bus stations screen
 **/
 const Favorites = () => {
-    const { t } = useTranslation()
     const navigation = useNavigation()
 
     const [list, setList] = useState()
@@ -85,10 +84,13 @@ const Favorites = () => {
 
     useEffect(() => {
 
-        const unsubscribe = navigation.addListener('focus', () => {
-            AsyncStorage.getItem('TestFavorite')
-                .then(res => setList(JSON.parse(res)))
-                .catch(error => console.log('Couldnt load!' + error))
+        const unsubscribe = navigation.addListener('focus', async () => {
+            try {
+                const response = await AsyncStorage.getItem('TestFavorite')
+                setList(JSON.parse(response))
+            } catch (err) {
+                console.log('loading error!' + err)
+            }
         })
 
         // Cleanup

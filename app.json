@@ -25,11 +25,19 @@
     "ios": {
       "bundleIdentifier": "com.davituri.timetable",
       "buildNumber": "1.0.0",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": " "
+      }
     },
     "android": {
       "package": "com.davituri.timetable",
-      "versionCode": 1
+      "versionCode": 1,
+      "config": {
+        "googleMaps": {
+          "apiKey": " "
+        }
+      }
     }
   }
 }

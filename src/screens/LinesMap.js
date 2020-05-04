@@ -5,17 +5,30 @@ import { useTranslation } from 'react-i18next'
 // Components
 import Map from '../components/Map'
 
+/**
+ * Lines Map screen
+**/
 export default LinesMap = ({ route }) => {
     const { busNumber, forward } = route.params
 
     const { i18n } = useTranslation()
     const navigation = useNavigation()
 
-    let [db, setDb] = useState({
+    /**
+     * 'markerData' contains station coords!
+     * 'polylinesData' contains entire bus route coords, 
+     * which is used to display yellow polyline on the map.
+    **/
+    const [db, setDb] = useState({
         markerData: [],
         polylinesData: []
     })
 
+    /**
+     * Request for fetching bus route coords.
+     * Based on direction that is set in Lines screen,
+     * 'forward' variable can only have one value: 0 or 1.
+    **/
     const endPointEn = `sorry API is hidden`
     const endPointGe = `sorry API is hidden`
 
@@ -47,6 +60,7 @@ export default LinesMap = ({ route }) => {
 
     }, [navigation])
 
+    // Opens Bus station timetable screen
     const openTimetable = (stopId, name) => {
         navigation.navigate('Timetable',
             { stationTimetableId: stopId, metadata: name })
@@ -56,8 +70,6 @@ export default LinesMap = ({ route }) => {
         <Map
             markerSource={db.markerData}
             polylineSource={db.polylinesData}
-            lat={10}
-            long={10}
             onPressHandler={openTimetable}
         />
     )

@@ -59,16 +59,13 @@ const Lines = () => {
     const { i18n } = useTranslation()
     const navigation = useNavigation()
 
-
-    let [db, setDb] = useState({
-        busArray: [],
-    })
+    const [busArray, setBusArray] = useState([])
 
     useEffect(() => {
 
-        const unsubscribe = navigation.addListener('focus', () => {
-            setDb({ busArray: i18n.language == 'en' ? (EnBus.Bus) : (GeBus.Bus) })
-        })
+        const linesInfo = i18n.language == 'en' ? (EnBus.Bus) : (GeBus.Bus)
+
+        const unsubscribe = navigation.addListener('focus', () => setBusArray(linesInfo))
 
         // Cleanup
         return unsubscribe
@@ -79,7 +76,7 @@ const Lines = () => {
         <SafeAreaView style={styles.container}>
 
             <FlatList
-                data={db.busArray}
+                data={busArray}
                 renderItem={({ item }) => (
                     <Item
                         busNumber={item.RouteNumber}

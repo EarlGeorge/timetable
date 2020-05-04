@@ -1,5 +1,6 @@
 import React from 'react'
-import MapView from 'react-native-maps'
+import { Marker, Polyline } from 'react-native-maps'
+import MapView from 'react-native-map-clustering'
 import night from '../assets/night.json'
 
 /**
@@ -9,34 +10,34 @@ import night from '../assets/night.json'
 const Map = ({ lat, long, polylineSource, markerSource, onPressHandler }) => {
 
     // MapView Markers 
-    // const markers = () => {
-    //     if (markerSource !== null) {
-    //         return markerSource.map((marker, index) => {
-    //             const coords = {
-    //                 latitude: marker.Lat,
-    //                 longitude: marker.Lon
-    //             }
+    const markers = () => {
+        if (markerSource != null) {
+            return markerSource.map((marker, index) => {
+                const coords = {
+                    latitude: marker.Lat,
+                    longitude: marker.Lon
+                }
 
-    //             const metadata = `Bus Station: ${marker.Name}`;
-
-    //             return (
-    //                 <MapView.Marker
-    //                     key={index}
-    //                     coordinate={coords}
-    //                     title={marker.StopId}
-    //                     description={metadata}
-    //                     onPress={() => onPressHandler(marker.StopId, marker.Name)}
-    //                 // icon={require('../assets/images/452386-48.png')}
-    //                 />
-    //             )
-    //         })
-    //     }
-    // }
+                return (
+                    <Marker
+                        key={index}
+                        coordinate={coords}
+                        title={marker.Name}
+                        description={' '}
+                        onPress={() => onPressHandler(marker.StopId, marker.Name)}
+                        pinColor={'red'}
+                        tracksViewChanges={false}
+                    // icon={require('../assets/images/452386-48.png')}
+                    />
+                )
+            })
+        }
+    }
 
     // MapView Polylines
     const polylines = () => {
         if (polylineSource != null) {
-            return <MapView.Polyline
+            return <Polyline
                 coordinates={polylineSource}
                 strokeWidth={4}
                 strokeColor='#fff829'
@@ -49,41 +50,21 @@ const Map = ({ lat, long, polylineSource, markerSource, onPressHandler }) => {
             style={{ flex: 1 }}
             provider='google'
             initialRegion={{
-                latitude: lat,
-                longitude: long,
-                latitudeDelta: 0.1022,
-                longitudeDelta: 0.0451
+                latitude: 41.71942312743827,
+                longitude: 44.77002225551471,
+                latitudeDelta: 0.0222,
+                longitudeDelta: 0.0225
             }}
+            clusterColor={'red'}
+            radius={200}
+            extent={700}
+            showsCompass={true}
             customMapStyle={night}
             showsUserLocation={true}
             showsMyLocationButton={true}
             followsUserLocation={true}
-        // loadingEnabled={true}
-        // loadingBackgroundColor={'red'}
-        // minZoomLevel={10}
-        // maxZoomLevel={17}
         >
-
-            {/* {markers()} */}
-
-            {markerSource[0] !== null && markerSource.map((marker, index) => {
-                const coords = {
-                    latitude: marker.Lat,
-                    longitude: marker.Lon
-                }
-                
-                return (
-                    <MapView.Marker
-                        key={index}
-                        coordinate={coords}
-                        title={marker.Name}
-                        description={' '}
-                        onPress={() => onPressHandler(marker.StopId, marker.Name)}
-                    // icon={require('../assets/images/452386-48.png')}
-                    />
-                )
-            })
-            }
+            {markers()}
 
             {polylines()}
 
