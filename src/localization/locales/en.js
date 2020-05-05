@@ -27,6 +27,7 @@ export default {
       modal: 'Delete selected station?',
       modalButtonYes: 'Yep!',
       modalButtonNo: 'Cancel',
+      empty: 'Star a station to see it here.'
     },
     lines : {
       bus: 'Bus',
@@ -35,11 +36,9 @@ export default {
       change: 'Change Direction'
     },
     about: {
-      title: 'Bus Station Timetable',
       info: "View real-time arrivals, based on the vehicle's GPS location.",
       changeLanguage: 'Change language',
-      madeBy: 'Developed by Davituri.',
-      copyright: '© Copyright All rights reserved.',
+      madeBy: 'Made by Davituri. ©',
       feedbackButton: 'Feedback'
     },
     feedback: {

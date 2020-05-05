@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, FlatList, AsyncStorage, TouchableHighlight, Modal, TouchableOpacity } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { useNavigation } from '@react-navigation/native'
+import { AntDesign } from '@expo/vector-icons'
 
 
 const Item = ({ station, info }) => {
@@ -77,13 +78,13 @@ const Item = ({ station, info }) => {
 **/
 const Favorites = () => {
     const navigation = useNavigation()
+    const { t } = useTranslation()
 
-    const [list, setList] = useState()
-
+    const [list, setList] = useState([])
     const [refreshing, setRefreshing] = useState(false)
 
     useEffect(() => {
-
+        
         const unsubscribe = navigation.addListener('focus', async () => {
             try {
                 const response = await AsyncStorage.getItem('TestFavorite')
@@ -107,8 +108,7 @@ const Favorites = () => {
             .then(() => { setRefreshing(false) })
     }
 
-
-    return (
+    return (list.length > 0 ?
         <View style={styles.container}>
             <FlatList
                 data={list}
@@ -117,6 +117,16 @@ const Favorites = () => {
                 onRefresh={onRefreshHandler}
                 refreshing={refreshing}
             />
+        </View>
+        :
+        <View style={styles.container}>
+            <View style={styles.emptyList}>
+                <AntDesign name="staro"
+                    color='white'
+                    size={45}
+                />
+                <Text>{t('favorites.empty')}</Text>
+            </View>
         </View>
     )
 }
@@ -137,6 +147,11 @@ const styles = StyleSheet.create({
     title: {
         margin: 1,
         fontSize: 15,
+    },
+    emptyList: {
+        alignItems: 'center',
+        top: 200,
+        paddingHorizontal: 20
     },
     modalView: {
         margin: 20,

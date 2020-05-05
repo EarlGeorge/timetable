@@ -67,8 +67,8 @@ const About = () => {
                 />
             </View>
 
-            <Text style={styles.copyright}>
-                {t('about.madeBy')} {new Date().getFullYear()} {t('about.copyright')}
+            <Text style={styles.made}>
+                {t('about.madeBy')} {new Date().getFullYear()}
             </Text>
         </View>
     )
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 125,
     },
-    copyright: {
+    made: {
         position: 'absolute',
         padding: 7,
         bottom: 25

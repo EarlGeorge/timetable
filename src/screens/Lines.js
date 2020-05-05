@@ -63,9 +63,9 @@ const Lines = () => {
 
     useEffect(() => {
 
-        const linesInfo = i18n.language == 'en' ? (EnBus.Bus) : (GeBus.Bus)
-
-        const unsubscribe = navigation.addListener('focus', () => setBusArray(linesInfo))
+        const unsubscribe = navigation.addListener('focus', () => {
+            setBusArray(i18n.language == 'en' ? (EnBus.Bus) : (GeBus.Bus))
+        })
 
         // Cleanup
         return unsubscribe

@@ -54,14 +54,22 @@ const Stations = () => {
       { stationTimetableId: stopId, metadata: name })
   }
 
+  const displayMap = () => {
+    if (db.markers.length > 100) {
+      return (
+        <Map
+          lat={db.lat}
+          long={db.long}
+          markerSource={db.markers}
+          onPressHandler={openTimetable}
+        />
+      )
+    }
+  }
+
   return (
     <View style={styles.container}>
-      <Map
-        lat={db.lat}
-        long={db.long}
-        markerSource={db.markers}
-        onPressHandler={openTimetable}
-      />
+     {displayMap()}
     </View>
   )
 }
