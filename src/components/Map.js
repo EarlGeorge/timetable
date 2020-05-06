@@ -11,7 +11,7 @@ const Map = ({ lat, long, polylineSource, markerSource, onPressHandler }) => {
 
     // MapView Markers 
     const markers = () => {
-        if (markerSource != null) {
+        if (markerSource.length > 0 ) {
             return markerSource.map((marker, index) => {
                 const coords = {
                     latitude: marker.Lat,
@@ -25,7 +25,7 @@ const Map = ({ lat, long, polylineSource, markerSource, onPressHandler }) => {
                         title={marker.Name}
                         description={' '}
                         onPress={() => onPressHandler(marker.StopId, marker.Name)}
-                        pinColor={'red'}
+                        pinColor={'#de373d'}
                         tracksViewChanges={false}
                     // icon={require('../assets/images/452386-48.png')}
                     />
@@ -55,8 +55,8 @@ const Map = ({ lat, long, polylineSource, markerSource, onPressHandler }) => {
                 latitudeDelta: 0.0222,
                 longitudeDelta: 0.0225
             }}
-            clusterColor={'red'}
-            radius={200}
+            clusterColor={'rgba(255, 0, 0, 0.4)'}
+            radius={170}
             extent={700}
             showsCompass={true}
             customMapStyle={night}

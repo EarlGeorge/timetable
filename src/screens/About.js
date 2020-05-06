@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, Picker } from 'react-native'
-import { useTranslation } from 'react-i18next'
 import { useNavigation } from '@react-navigation/native'
-import { LinearGradient } from 'expo-linear-gradient'
+import { useTranslation } from 'react-i18next'
 
 // Component
 import Button from '../components/Button'
@@ -34,20 +33,7 @@ const About = () => {
 
     return (
         <View style={styles.container}>
-
-            <LinearGradient
-                colors={['rgb(227, 243, 255)', 'rgb(136, 179, 209)']}
-                style={{
-                    position: 'absolute',
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    height: '100%',
-                }}
-            />
-
             <Text style={styles.info}>{t('about.info')}</Text>
-
             <Picker
                 selectedValue={appLanguage}
                 onValueChange={onChangeLanguage}
@@ -57,16 +43,14 @@ const About = () => {
                     return <Picker.Item key={i} value={languageItem.key} label={languageItem.label} />
                 })}
             </Picker>
-
             <View style={styles.feedback}>
                 <Button
                     onPress={feedbackHandler}
                     text={t('about.feedbackButton')}
-                    buttonColor='#80a7c2'
-                    textColor='white'
+                    buttonColor='#c7dceb'
+                    textColor='black'
                 />
             </View>
-
             <Text style={styles.made}>
                 {t('about.madeBy')} {new Date().getFullYear()}
             </Text>
@@ -81,6 +65,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: '#bacfde'
     },
     info: {
         flex: 1,

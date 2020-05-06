@@ -12,8 +12,8 @@ export default Button = ({ text, onPress, buttonColor, textColor }) => {
 const styles = StyleSheet.create({
   button: {
     borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 10,
+    paddingVertical: 4,
+    paddingHorizontal: 7,
   },
   buttonText: {
     fontWeight: 'bold',

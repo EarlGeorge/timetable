@@ -27,7 +27,7 @@ const BottomTab = () => {
         <Tab.Navigator
             initialRouteName="Stations"
             tabBarOptions={{
-                activeTintColor: '#e91e63',
+                activeTintColor: 'red',
                 style: { backgroundColor: '#f7fcff' }
             }}
         >
