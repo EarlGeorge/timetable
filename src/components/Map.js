@@ -27,7 +27,7 @@ const Map = ({ lat, long, polylineSource, markerSource, onPressHandler }) => {
                         onPress={() => onPressHandler(marker.StopId, marker.Name)}
                         pinColor={'#de373d'}
                         tracksViewChanges={false}
-                    // icon={require('../assets/images/452386-48.png')}
+                        icon={require('../assets/images/b.png')}
                     />
                 )
             })
