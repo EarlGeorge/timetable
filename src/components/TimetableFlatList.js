@@ -3,7 +3,7 @@ import { SafeAreaView, View, FlatList, StyleSheet, Text, Animated, Easing } from
 import Constants from 'expo-constants'
 
 
-function Item({ title, time, bus }) {
+function Item({ title, time, bus, nowText, minText }) {
 
     // Side effects
     useEffect(() => {
@@ -16,7 +16,7 @@ function Item({ title, time, bus }) {
     }, [focusAnimation])
 
     let focus = new Animated.Value(0)
-    
+
     // Item time animation
     function focusAnimation() {
         focus.setValue(0)
@@ -33,12 +33,12 @@ function Item({ title, time, bus }) {
     if (time <= 2 || 0) {
         willBeIn = (
             <Animated.View style={[{ opacity: focus }]}>
-                <Text>Now</Text>
+                <Text>{nowText}</Text>
             </Animated.View>
         )
     } else {
         willBeIn = (
-            <Text>in {time} min</Text>
+            <Text>{time} {minText}</Text>
         )
     }
 
@@ -54,7 +54,7 @@ function Item({ title, time, bus }) {
 /**
  * FlatList Component
 **/
-const TimetableFlatList = ({ setData, refreshHandler }) => {
+const TimetableFlatList = ({ setData, refreshHandler, nowText, minText }) => {
 
     return (
         <SafeAreaView style={styles.container}>
@@ -65,6 +65,8 @@ const TimetableFlatList = ({ setData, refreshHandler }) => {
                         title={item.DestinationStopName}
                         time={item.ArrivalTime}
                         bus={item.RouteNumber}
+                        nowText={nowText}
+                        minText={minText}
                     />
                 )}
                 keyExtractor={item => item.RouteNumber}

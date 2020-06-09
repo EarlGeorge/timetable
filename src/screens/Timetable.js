@@ -34,7 +34,7 @@ export default Timetable = ({ route }) => {
         fetch(endPoint, { signal })
             .then(res => res.json())
             .then(data => setBusList(data.ArrivalTime))
-            .catch(err => console.log(err), Alert.alert(
+            .catch(() => Alert.alert(
                 t('timetable.error'),
                 t('timetable.server_err'),
                 [{ text: t('timetable.cancel') }]
@@ -47,15 +47,15 @@ export default Timetable = ({ route }) => {
     const [refreshing, setRefreshing] = React.useState(false);
 
     const onRefresh = React.useCallback(() => {
-        setRefreshing(true);
+        setRefreshing(true)
 
         fetch(endPoint)
             .then(res => res.json())
             .then(data => setBusList(data.ArrivalTime))
-            .catch(err => console.log(err))
+            .catch(() => Alert.alert('', t('timetable.error'), [{ text: t('timetable.cancel') }]))
 
-        wait(2000).then(() => setRefreshing(false));
-    }, [refreshing]);
+        wait(2000).then(() => setRefreshing(false))
+    }, [refreshing])
 
     const saveFavoritehHandler = () => {
         //  AsyncStorage.removeItem('TestFavorite')
@@ -107,6 +107,8 @@ export default Timetable = ({ route }) => {
 
             <TimetableFlatList
                 setData={busList}
+                minText={t('timetable.minText')}
+                nowText={t('timetable.nowText')}
                 refreshHandler={
                     <RefreshControl
                         refreshing={refreshing}

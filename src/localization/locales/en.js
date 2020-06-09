@@ -18,6 +18,8 @@ export default {
       bus: 'Bus',
       direction: 'Direction',
       time: 'Time',
+      nowText: 'Now',
+      minText: 'min',
       favorite: 'Already exists in Favorites list',
       error: 'Error occurred!',
       server_err: 'Temporarry Server issue, try later.',
@@ -29,7 +31,7 @@ export default {
       modalButtonNo: 'Cancel',
       empty: 'Star a station to see it here.'
     },
-    lines : {
+    lines: {
       bus: 'Bus',
       direction: 'Route direction',
       from: 'Starts from:',
@@ -49,7 +51,7 @@ export default {
       submitTitle: 'Submit',
       schemaRequiredName: 'Name is required field',
       schemaRequiredEmail: 'E-mail is required',
-      schemaRequiredMessage : 'Message field is required'
+      schemaRequiredMessage: 'Message field is required'
     }
   }
 }
