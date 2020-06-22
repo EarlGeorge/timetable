@@ -13,19 +13,25 @@ function wait(timeout) {
     });
 }
 
-// bus station Timetable screen 
+/**
+ * Bus station Timetable screen!
+**/
 export default Timetable = ({ route }) => {
     const { t, i18n } = useTranslation()
-    const { stationTimetableId, metadata } = route.params
 
+    // station ID which you get from Stations screen
+    const { stationTimetableId, metadata } = route.params
+    const metainfo = { station: stationTimetableId, info: metadata }
+
+    // Arrival bus list
     const [busList, setBusList] = useState([])
     const endPointEn = `sorry API is hidden`
     const endPointGe = `sorry API is hidden`
 
     const endPoint = i18n.language == 'en' ? (endPointEn) : (endPointGe)
 
-    // TestFavorite:Bookmarks
-    let metainfo = { station: stationTimetableId, info: metadata }
+    // Local Time string object
+    const [localTime, setLocalTime] = useState('')
 
     useEffect(() => {
         const controller = new AbortController()
@@ -33,7 +39,10 @@ export default Timetable = ({ route }) => {
 
         fetch(endPoint, { signal })
             .then(res => res.json())
-            .then(data => setBusList(data.ArrivalTime))
+            .then(data => {
+                setBusList(data.ArrivalTime)
+                setInterval(() => setLocalTime(new Date().toLocaleTimeString('ka-KA')), 1000)
+            })
             .catch(() => Alert.alert(
                 t('timetable.error'),
                 t('timetable.server_err'),
@@ -57,19 +66,20 @@ export default Timetable = ({ route }) => {
         wait(2000).then(() => setRefreshing(false))
     }, [refreshing])
 
-    const saveFavoritehHandler = () => {
-        //  AsyncStorage.removeItem('TestFavorite')
-
+    /**
+     * Saves station ID and metainfo to local storage!
+    **/
+    const saveFavoriteHandler = () => {
         AsyncStorage.getItem('TestFavorite', async (err, result) => {
             if (result == null) {
 
-                let array = await (JSON.parse(result))
+                const array = await (JSON.parse(result))
                 array = ([metainfo])
                 await AsyncStorage.setItem('TestFavorite', JSON.stringify(array))
 
             } else if (result !== null) {
 
-                let array = await JSON.parse(result)
+                const array = await JSON.parse(result)
                 let onAlert
 
                 await array.forEach((value) => {
@@ -87,6 +97,34 @@ export default Timetable = ({ route }) => {
         })
     }
 
+    /**
+     * Displays Local Time!
+     * Shows night time if it's between 12:00AM - 6:00AM 
+     * Shows delay if timetable is empty between 7:00AM - 11:00PM 
+    **/
+
+    const displayTime = () => {
+        if (busList.length <= 0 &&
+            (localTime.endsWith('AM') && parseInt(localTime) >= 7 || localTime.endsWith('PM') && parseInt(localTime) <= 12)
+        ) {
+            return (
+                <View style={styles.localTime}>
+                    <Text>{localTime} (GMT+4)</Text>
+                    <Text>Georgian Local Time</Text>
+                    <Text>Approximately time delay is 30+ min!</Text>
+                </View>
+            )
+        }
+        else if (localTime.endsWith('AM') && parseInt(localTime) == 12 || localTime.endsWith('AM') && parseInt(localTime) <= 6) {
+            return (
+                <View style={styles.localTime}>
+                    <Text>{localTime} (GMT+4)</Text>
+                    <Text>Bus currently not in service it's night time!</Text>
+                </View>
+            )
+        }
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.info}>{t('timetable.station')} {stationTimetableId}</Text>
@@ -95,7 +133,7 @@ export default Timetable = ({ route }) => {
                 color='white'
                 size={30}
                 style={styles.favoriteIcon}
-                onPress={saveFavoritehHandler}
+                onPress={saveFavoriteHandler}
             />
 
             <View style={styles.listItem}>
@@ -103,7 +141,6 @@ export default Timetable = ({ route }) => {
                 <Text>{t('timetable.direction')}</Text>
                 <Text>{t('timetable.time')}</Text>
             </View>
-
 
             <TimetableFlatList
                 setData={busList}
@@ -116,6 +153,7 @@ export default Timetable = ({ route }) => {
                     />
                 }
             />
+            {displayTime()}
         </View>
     )
 }
@@ -123,12 +161,12 @@ export default Timetable = ({ route }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#bacfde"
+        backgroundColor: '#bacfde'
     },
     info: {
         marginTop: 5,
         padding: 10,
-        textAlign: "center"
+        textAlign: 'center'
     },
     favoriteIcon: {
         position: 'absolute',
@@ -145,6 +183,14 @@ const styles = StyleSheet.create({
         padding: 15,
         marginVertical: 4,
         marginHorizontal: 15,
+    },
+    localTime: {
+        flex: 1,
+        textAlign: 'center',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginVertical: 150,
     }
 })
+
 

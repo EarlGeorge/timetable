@@ -1,5 +1,4 @@
 import React from 'react'
-import { StyleSheet, Platform } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -108,10 +107,8 @@ export default Routes = () => {
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: '#ebf7ff' }, headerTitleAlign: 'center' }} >
                 <Stack.Screen name="BottomTab" component={BottomTab} options={({ route }) => ({
-
                     headerBackTitle: getHeaderTitle(route),
                     headerTitle: getHeaderTitle(route)
-
                 })} />
                 <Stack.Screen name="Timetable" component={Timetable} options={{ title: t('routes.timetable') }} />
                 <Stack.Screen name="Feedback" component={Feedback} options={{ title: t('routes.feedback') }} />
@@ -121,19 +118,3 @@ export default Routes = () => {
     )
 }
 
-const styles = StyleSheet.create({
-    containerStyle: {
-        borderColor: '#ddd',
-        ...Platform.select({
-            ios: {
-                shadowColor: 'black',
-                shadowOffset: { width: 1, height: 4 },
-                shadowOpacity: 0.1,
-                shadowRadius: 3,
-            },
-            android: {
-                elevation: 20,
-            },
-        }),
-    }
-})
