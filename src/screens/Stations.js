@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, Platform } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 
@@ -18,29 +18,14 @@ const Stations = () => {
     lat: 41.71942312743827,
     long: 44.77002225551471,
     markers: [],
+    loading: true
   })
 
   useEffect(() => {
-    // navigator.geolocation.getCurrentPosition((position) => {
-    //   const lat = parseFloat(position.coords.latitude)
-    //   const long = parseFloat(position.coords.longitude)
-    //   db({ lat, long })
-    // })
 
     const unsubscribe = navigation.addListener('focus', () => {
-
       const station = i18n.language == 'en' ? (EnDb.Stops) : (GeDb.Stops)
-
-      setDb({ markers: station })
-
-      // Platform.select({
-      //   ios: setDb({ markers: station }),
-
-      //   android: setTimeout(() => {
-      //     setDb({ markers: station })
-      //   }, 4000)
-      // })
-
+      setDb({ markers: station, loading: false })
     })
 
     // Cleanup
@@ -51,25 +36,18 @@ const Stations = () => {
   // Opens Timetable screen which takes some props from map marker 
   const openTimetable = (stopId, name) => {
     navigation.navigate('Timetable',
-      { stationTimetableId: stopId, metadata: name })
+      { stationTimetableId: stopId, metadata: name }
+    )
   }
 
-  const displayMap = () => {
-    if (db.markers.length > 100) {
-      return (
-        <Map
-          lat={db.lat}
-          long={db.long}
-          markerSource={db.markers}
-          onPressHandler={openTimetable}
-        />
-      )
-    }
-  }
-
-  return (
+  return db.loading ? null : (
     <View style={styles.container}>
-     {displayMap()}
+      <Map
+        lat={db.lat}
+        long={db.long}
+        markerSource={db.markers}
+        onPressHandler={openTimetable}
+      />
     </View>
   )
 }

@@ -51,7 +51,7 @@ const About = () => {
                     textColor='black'
                 />
             </View>
-            <Text style={styles.made}>
+            <Text>
                 {t('about.madeBy')} {new Date().getFullYear()}
             </Text>
         </View>
@@ -63,29 +63,22 @@ export default About
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#bacfde'
+        justifyContent: "space-between",
+        padding: 20,
+        backgroundColor: '#bacfde',
     },
     info: {
         flex: 1,
         top: 10,
-        padding: 20,
         lineHeight: 20,
     },
     picker: {
-        position: 'absolute',
-        top: 145,
+        flex: 3,
         height: 200,
         width: 200,
     },
     feedback: {
-        position: 'absolute',
-        bottom: 125,
-    },
-    made: {
-        position: 'absolute',
-        padding: 7,
-        bottom: 25
+        bottom: 45,
     }
 })

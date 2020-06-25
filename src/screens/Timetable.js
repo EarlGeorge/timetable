@@ -10,7 +10,7 @@ import TimetableFlatList from '../components/TimetableFlatList'
 function wait(timeout) {
     return new Promise(resolve => {
         setTimeout(resolve, timeout);
-    });
+    })
 }
 
 /**
@@ -39,18 +39,19 @@ export default Timetable = ({ route }) => {
 
         fetch(endPoint, { signal })
             .then(res => res.json())
-            .then(data => {
-                setBusList(data.ArrivalTime)
-                setInterval(() => setLocalTime(new Date().toLocaleTimeString('ka-KA')), 1000)
-            })
+            .then(data => setBusList(data.ArrivalTime))
             .catch(() => Alert.alert(
                 t('timetable.error'),
                 t('timetable.server_err'),
                 [{ text: t('timetable.cancel') }]
             ))
 
+        const interval = setInterval(() => {
+            setLocalTime(new Date().toLocaleTimeString('en-US', 'ka-KA'))
+        }, 1000)
+
         // clean up
-        return () => controller.abort()
+        return () => { controller.abort(); clearInterval(interval) }
     }, [])
 
     const [refreshing, setRefreshing] = React.useState(false);
@@ -104,8 +105,12 @@ export default Timetable = ({ route }) => {
     **/
 
     const displayTime = () => {
-        if (busList.length <= 0 &&
-            (localTime.endsWith('AM') && parseInt(localTime) >= 7 || localTime.endsWith('PM') && parseInt(localTime) <= 12)
+        if (busList.length === 0 &&
+            (
+                (localTime.endsWith('AM') && parseInt(localTime) >= 7 && parseInt(localTime) !== 12)
+                ||
+                (localTime.endsWith('PM') && parseInt(localTime) <= 12)
+            )
         ) {
             return (
                 <View style={styles.localTime}>
@@ -119,6 +124,7 @@ export default Timetable = ({ route }) => {
             return (
                 <View style={styles.localTime}>
                     <Text>{localTime} (GMT+4)</Text>
+                    <Text>Georgian Local Time</Text>
                     <Text>Bus currently not in service it's night time!</Text>
                 </View>
             )

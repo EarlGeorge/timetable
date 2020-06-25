@@ -11,7 +11,7 @@ const Map = ({ lat, long, polylineSource, markerSource, onPressHandler }) => {
 
     // MapView Markers 
     const markers = () => {
-        if (markerSource.length > 0 ) {
+        if (markerSource.length > 0) {
             return markerSource.map((marker, index) => {
                 const coords = {
                     latitude: marker.Lat,
