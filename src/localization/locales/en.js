@@ -23,7 +23,10 @@ export default {
       favorite: 'Already exists in Favorites list',
       error: 'Error occurred!',
       server_err: 'Temporarry Server issue, try later.',
-      cancel: 'Cancel'
+      cancel: 'Cancel',
+      localTime: 'Georgian Local Time.',
+      localTimeDelay: 'Approximately time delay is 30+ min!',
+      localTimeNight: "Bus currently not in service it's night time!"
     },
     favorites: {
       modal: 'Delete selected station?',

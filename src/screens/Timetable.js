@@ -115,8 +115,8 @@ export default Timetable = ({ route }) => {
             return (
                 <View style={styles.localTime}>
                     <Text>{localTime} (GMT+4)</Text>
-                    <Text>Georgian Local Time</Text>
-                    <Text>Approximately time delay is 30+ min!</Text>
+                    <Text>{t('timetable.localTime')}</Text>
+                    <Text>{t('timetable.localTimeDelay')}</Text>
                 </View>
             )
         }
@@ -124,8 +124,8 @@ export default Timetable = ({ route }) => {
             return (
                 <View style={styles.localTime}>
                     <Text>{localTime} (GMT+4)</Text>
-                    <Text>Georgian Local Time</Text>
-                    <Text>Bus currently not in service it's night time!</Text>
+                    <Text>{t('timetable.localTime')}</Text>
+                    <Text>{t('timetable.localTimeNight')}</Text>
                 </View>
             )
         }
