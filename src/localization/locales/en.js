@@ -24,7 +24,7 @@ export default {
       error: 'Error occurred!',
       server_err: 'Temporarry Server issue, try later.',
       cancel: 'Cancel',
-      localTime: 'Georgian Local Time.',
+      localTime: 'Georgia Local Time.',
       localTimeDelay: 'Approximately time delay is 30+ min!',
       localTimeNight: "Bus currently not in service it's night time!"
     },
