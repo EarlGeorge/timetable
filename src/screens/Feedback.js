@@ -1,5 +1,6 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard, ScrollView, Alert } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { sendGridEmail } from 'react-native-sendgrid'
 
@@ -14,16 +15,25 @@ const subject = 'Bus Timetable Feedback'
  * Feedback screen 
 **/
 const Feedback = () => {
+    const navigation = useNavigation()
     const { t } = useTranslation()
 
+    // Sends Form input to your email using sendGrid!
     const sendEmailHandler = (values) => {
         const sendFrom = values.email
 
         const contact = `Contact: ${values.name}. Mail: ${values.email}. Message: ${values.message}.`
 
         sendGridEmail(sendGridKey, sendTo, sendFrom, subject, contact)
-            .then((res) => console.log('Success', res))
-            .catch((err) => console.log(err))
+            .then(() => {
+                Alert.alert('', t('feedback.onSuccessfulSubmit'),
+                    [{
+                        text: t('feedback.cancel'),
+                        onPress: () => navigation.navigate('About')
+                    }]
+                )
+            })
+            .catch(() => Alert.alert(t('feedback.error'), t('feedback.onSubmitError'), [{ text: t('feedback.cancel') }]))
     }
 
     return (

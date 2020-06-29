@@ -54,7 +54,11 @@ export default {
       submitTitle: 'Submit',
       schemaRequiredName: 'Name is required field',
       schemaRequiredEmail: 'E-mail is required',
-      schemaRequiredMessage: 'Message field is required'
+      schemaRequiredMessage: 'Message field is required',
+      onSuccessfulSubmit: 'Thanks for your Feedback.',
+      onSubmitError: 'Unable to send message.',
+      error: 'Error occurred!',
+      cancel: 'Cancel'
     }
   }
 }

@@ -4,7 +4,10 @@
 View realtime arrivals, based on the vehicle's GPS location.
 It is similar to Moovit.app but only supports one country.
 ```
+
 ### You can find it on [(PlayStore) Bus Timetable ](https://play.google.com/store/apps/details?id=com.davituri.timetable)
+
+<img src="./app-gif.gif" alt="gif" width="200px" />
 
 # Technology:
 | **Tech** | **Description** |**Using** |
@@ -18,4 +21,6 @@ It is similar to Moovit.app but only supports one country.
 ## Feedback
 
     If you have encountered a bug, or have a useful suggestion how to improve,
-    Create issue.
+    Create issue, or make a pull request! 
+
+> Follow me on [Twitter](https://twitter.com/georgeDavituri) to keep up with my future projects.

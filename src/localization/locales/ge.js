@@ -54,7 +54,11 @@ export default {
             submitTitle: 'გაგზავნა',
             schemaRequiredName: 'გამოგრჩათ სახელი',
             schemaRequiredEmail: 'გამოტოვებულია მეილის გრაფა',
-            schemaRequiredMessage: 'გამოგრჩათ წერილის ჩაწერა'
+            schemaRequiredMessage: 'გამოგრჩათ წერილის ჩაწერა',
+            onSuccessfulSubmit: 'გმადლობთ, თქვენი წერილი მიღებულია.',
+            onSubmitError: 'ახლიდან სცადეთ გამოგზავნა!',
+            error: 'დაფიქსირდა შეცდომა!',
+            cancel: 'დახურვა'
         }
     }
 }
