@@ -2,12 +2,13 @@ import React, { useEffect } from 'react'
 import { SafeAreaView, View, FlatList, StyleSheet, Text, Animated, Easing } from 'react-native'
 import Constants from 'expo-constants'
 
-
+/**
+ * Timetable FlatList component!
+**/
 function Item({ title, time, bus, nowText, minText }) {
 
-    // Side effects
+    // start animation after Flatlist render
     useEffect(() => {
-        // start animation after Flatlist render
         focusAnimation()
 
         // Cleanup
@@ -17,7 +18,7 @@ function Item({ title, time, bus, nowText, minText }) {
 
     let focus = new Animated.Value(0)
 
-    // Item time animation
+    // focus animation
     function focusAnimation() {
         focus.setValue(0)
         Animated.timing(focus, {
@@ -28,25 +29,28 @@ function Item({ title, time, bus, nowText, minText }) {
         }).start(() => focusAnimation())
     }
 
-    // apply animation if time is only below two minutes
-    let willBeIn = time
-    if (time <= 2 || 0) {
-        willBeIn = (
-            <Animated.View style={[{ opacity: focus }]}>
-                <Text>{nowText}</Text>
-            </Animated.View>
-        )
-    } else {
-        willBeIn = (
-            <Text>{time} {minText}</Text>
-        )
+    // apply animation if time is below two minutes or 0 and display 'Now' instead of time.
+    // time is number it can be between 0-90: represents minutes.
+    const willBeIn = () => {
+        if (time <= 2 || 0) {
+            return (
+                <Animated.View style={[{ opacity: focus }]}>
+                    <Text>{nowText}</Text>
+                </Animated.View>
+            )
+        }
+        else {
+            return (
+                <Text>{time} {minText}</Text>
+            )
+        }
     }
 
     return (
         <View style={styles.listItemView}>
             <Text>{bus}</Text>
             <Text style={styles.title}>{title}</Text>
-            {willBeIn}
+            {willBeIn()}
         </View>
     )
 }
