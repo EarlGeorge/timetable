@@ -84,7 +84,7 @@ const Favorites = () => {
     const [refreshing, setRefreshing] = useState(false)
 
     useEffect(() => {
-        
+
         const unsubscribe = navigation.addListener('focus', async () => {
             try {
                 const response = await AsyncStorage.getItem('TestFavorite')

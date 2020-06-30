@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-// import AsyncStorage from '@react-native-community/async-storage'
-import { View, Text, StyleSheet, RefreshControl, AsyncStorage, Alert } from 'react-native'
+import { View, Text, StyleSheet, RefreshControl, Alert } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
+import { useNetInfo } from "@react-native-community/netinfo"
 import { useTranslation } from 'react-i18next'
 import { AntDesign } from '@expo/vector-icons'
 
@@ -18,6 +19,8 @@ function wait(timeout) {
 **/
 export default Timetable = ({ route }) => {
     const { t, i18n } = useTranslation()
+    // netInfo helps to check network connection status. Timeout 15s 
+    const netInfo = useNetInfo({ reachabilityRequestTimeout: 15 * 1000 })
 
     // station ID which you get from Stations screen
     const { stationTimetableId, metadata } = route.params
@@ -70,8 +73,10 @@ export default Timetable = ({ route }) => {
     /**
      * Saves station ID and metainfo to local storage!
     **/
-    const saveFavoriteHandler = () => {
-        AsyncStorage.getItem('TestFavorite', async (err, result) => {
+    const saveFavoriteHandler = async () => {
+        try {
+            const result = await AsyncStorage.getItem('TestFavorite')
+
             if (result == null) {
 
                 const array = await (JSON.parse(result))
@@ -95,17 +100,20 @@ export default Timetable = ({ route }) => {
                     AsyncStorage.setItem('TestFavorite', JSON.stringify(array))
                 }
             }
-        })
+        } catch (err) {
+            Alert.alert('', err, [{ text: t('timetable.cancel') }])
+        }
     }
 
     /**
      * Displays Local Time!
-     * Shows night time if it's between 12:00AM - 6:00AM 
-     * Shows delay if timetable is empty between 7:00AM - 11:00PM 
+     * Shows night time if it's between 12:00AM - 6:00AM. 
+     * Shows delay if timetable is empty between 7:00AM - 11:00PM, 
+     * also for displaying delay we check network status.
     **/
 
     const displayTime = () => {
-        if (busList.length === 0 &&
+        if (busList.length === 0 && netInfo.isConnected &&
             (
                 (localTime.endsWith('AM') && parseInt(localTime) >= 7 && parseInt(localTime) !== 12)
                 ||
