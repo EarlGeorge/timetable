@@ -1,28 +1,24 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, FlatList, AsyncStorage, TouchableHighlight, Modal, TouchableOpacity } from 'react-native'
-import { useTranslation } from 'react-i18next'
+import { View, Text, StyleSheet, FlatList, TouchableHighlight, Modal, TouchableOpacity } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 import { useNavigation } from '@react-navigation/native'
+import { useTranslation } from 'react-i18next'
 import { AntDesign } from '@expo/vector-icons'
 
 
 const Item = ({ station, info }) => {
     const navigation = useNavigation()
-
     const { t } = useTranslation()
 
     const [modalVisible, setModalVisible] = useState(false)
 
-    const onDeleteHandler = () => {
-
-        AsyncStorage.getItem('TestFavorite', async (err, result) => {
-            if (result !== null) {
-
-                let array = (JSON.parse(result))
-                let deleteItem = array.filter(item => item.station !== station)
-                await AsyncStorage.setItem('TestFavorite', JSON.stringify(deleteItem))
-            }
-        })
-
+    const onDeleteHandler = async () => {
+        const result = await AsyncStorage.getItem('TestFavorite')
+        if (result !== null) {
+            const array = await (JSON.parse(result))
+            const deleteItem = await array.filter(item => item.station !== station)
+            AsyncStorage.setItem('TestFavorite', JSON.stringify(deleteItem))
+        }
         setModalVisible(!modalVisible)
     }
 
@@ -51,7 +47,7 @@ const Item = ({ station, info }) => {
 
                             <Text style={styles.modalText}>{t('favorites.modal')}</Text>
 
-                            <Text>{station}</Text>
+                            <Text style={styles.stationID}>{station}</Text>
 
                             <View style={styles.modalButtons}>
 
@@ -86,12 +82,8 @@ const Favorites = () => {
     useEffect(() => {
 
         const unsubscribe = navigation.addListener('focus', async () => {
-            try {
-                const response = await AsyncStorage.getItem('TestFavorite')
-                setList(JSON.parse(response))
-            } catch (err) {
-                console.log('loading error!' + err)
-            }
+            const result = await AsyncStorage.getItem('TestFavorite')
+            setList(JSON.parse(result))
         })
 
         // Cleanup
@@ -100,12 +92,13 @@ const Favorites = () => {
     }, [navigation])
 
 
-    const onRefreshHandler = () => {
+    const onRefreshHandler = async () => {
         setRefreshing(true)
 
-        AsyncStorage.getItem('TestFavorite')
-            .then(res => setList(JSON.parse(res)))
-            .then(() => { setRefreshing(false) })
+        const result = await AsyncStorage.getItem('TestFavorite')
+        setList(JSON.parse(result))
+
+        setRefreshing(false)
     }
 
     return (list.length > 0 ?
@@ -154,11 +147,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20
     },
     modalView: {
+        top: 50,
         margin: 20,
         backgroundColor: "white",
         borderRadius: 20,
         padding: 35,
-        alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -166,14 +159,14 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 5
+        elevation: 5,
     },
-
     modalButtons: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'space-between',
     },
     modalButtonYes: {
+        margin: 10,
         borderRadius: 15,
         paddingVertical: 10,
         paddingHorizontal: 10,
@@ -187,6 +180,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     modalButtonNo: {
+        margin: 10,
         borderRadius: 15,
         paddingVertical: 10,
         paddingHorizontal: 10,
@@ -200,8 +194,12 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     modalText: {
-        marginBottom: 15,
-        textAlign: "center"
+        marginBottom: 30,
+        textAlign: "center",
+    },
+    stationID: {
+        marginBottom: 30,
+        textAlign: "center",
     },
     separator: {
         marginVertical: 8,

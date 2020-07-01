@@ -72,6 +72,7 @@ export default Timetable = ({ route }) => {
 
     /**
      * Saves station ID and metainfo to local storage!
+     * Checks if ID exist in storage and displays pop up warning.
     **/
     const saveFavoriteHandler = async () => {
         try {
@@ -81,14 +82,14 @@ export default Timetable = ({ route }) => {
 
                 const array = await (JSON.parse(result))
                 array = ([metainfo])
-                await AsyncStorage.setItem('TestFavorite', JSON.stringify(array))
+                AsyncStorage.setItem('TestFavorite', JSON.stringify(array))
 
             } else if (result !== null) {
 
                 const array = await JSON.parse(result)
                 let onAlert
 
-                await array.forEach((value) => {
+                array.forEach((value) => {
                     if (value.station == stationTimetableId) {
                         Alert.alert('', t('timetable.favorite'), [{ text: t('timetable.cancel') }])
                         onAlert = true
