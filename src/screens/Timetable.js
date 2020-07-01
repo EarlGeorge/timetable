@@ -80,23 +80,23 @@ export default Timetable = ({ route }) => {
 
             if (result == null) {
 
-                const array = await (JSON.parse(result))
-                array = ([metainfo])
-                AsyncStorage.setItem('TestFavorite', JSON.stringify(array))
+                const createArray = [metainfo]
+
+                AsyncStorage.setItem('TestFavorite', JSON.stringify(createArray))
 
             } else if (result !== null) {
 
                 const array = await JSON.parse(result)
-                let onAlert
+                let onAlert = false
 
                 array.forEach((value) => {
                     if (value.station == stationTimetableId) {
-                        Alert.alert('', t('timetable.favorite'), [{ text: t('timetable.cancel') }])
                         onAlert = true
+                        Alert.alert('', t('timetable.favorite'), [{ text: t('timetable.cancel') }])
                     }
                 })
 
-                if (onAlert !== true) {
+                if (onAlert == false) {
                     array.push(metainfo)
                     AsyncStorage.setItem('TestFavorite', JSON.stringify(array))
                 }

@@ -83,7 +83,10 @@ const Favorites = () => {
 
         const unsubscribe = navigation.addListener('focus', async () => {
             const result = await AsyncStorage.getItem('TestFavorite')
-            setList(JSON.parse(result))
+            if (result == null) return
+            else {
+                setList(JSON.parse(result))
+            }
         })
 
         // Cleanup
