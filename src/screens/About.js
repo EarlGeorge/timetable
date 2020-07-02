@@ -12,10 +12,8 @@ import Button from '../components/Button'
 const About = () => {
     // used for translation
     const { t, i18n } = useTranslation()
-    // used for navigation
     const navigation = useNavigation()
 
-    // change App language
     const [appLanguage, setAppLanguage] = useState(i18n.language)
 
     const listLanguage = [
@@ -23,8 +21,8 @@ const About = () => {
         { key: 'ge', label: 'ქართული 🇬🇪' },
     ]
 
-    const onChangeLanguage = async (languageSelected) => {
-        await i18n.changeLanguage(languageSelected)
+    const onChangeLanguage = (languageSelected) => {
+        i18n.changeLanguage(languageSelected)
         setAppLanguage(languageSelected)
     }
 
