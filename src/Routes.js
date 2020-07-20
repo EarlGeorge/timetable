@@ -16,92 +16,89 @@ import Feedback from './screens/Feedback'
 import LinesMap from './screens/LinesMap'
 import Lines from './screens/Lines'
 
-const Stack = createStackNavigator()
-const Tab = createBottomTabNavigator()
-
-const BottomTab = () => {
-    const { t } = useTranslation()
-
-    return (
-        <Tab.Navigator
-            initialRouteName="Stations"
-            tabBarOptions={{
-                activeTintColor: 'red',
-                style: { backgroundColor: '#f7fcff' }
-            }}
-        >
-            <Tab.Screen
-                name="Favorites"
-                component={Favorites}
-                options={{
-                    title: t('routes.favorites'),
-                    tabBarIcon: ({ color, size }) => (
-                        <AntDesign name="staro" color={color} size={size} />
-                    ),
-                }}
-            />
-            <Tab.Screen
-                name="Stations"
-                component={Stations}
-                options={{
-                    title: t('routes.stations'),
-                    tabBarIcon: ({ color, size }) => (
-                        <Entypo name="location" color={color} size={size} />
-                    ),
-                }}
-            />
-            <Tab.Screen
-                name="Lines"
-                component={Lines}
-                options={{
-                    title: t('routes.lines'),
-                    tabBarIcon: ({ color, size }) => (
-                        <Entypo name="dots-three-horizontal" color={color} size={size} />
-                    ),
-                }}
-            />
-            <Tab.Screen
-                name="About"
-                component={About}
-                options={{
-                    title: t('routes.about'),
-                    tabBarIcon: ({ color, size }) => (
-                        <Entypo name="info" color={color} size={size} />
-                    ),
-                }}
-            />
-        </Tab.Navigator>
-    )
-}
-
-const getHeaderTitle = (route) => {
-    const { t } = useTranslation()
-
-    // Accessing the tab navigator's state using `route.state`
-    const routeName = route.state
-
-        ? // Get the currently active route name in the tab navigator
-        route.state.routes[route.state.index].name
-        : // If state doesn't exist, we need to default to `screen` param if available, or the initial screen
-        route.params?.screen || 'Stations'
-
-    switch (routeName) {
-        case 'Stations':
-            return t('routes.stationsHeader')
-        case 'Favorites':
-            return t('routes.favoritesHeader')
-        case 'Lines':
-            return t('routes.linesHeader')
-        case 'About':
-            return t('routes.aboutHeader')
-    }
-}
-
 /**
  * App root: *
 **/
 export default Routes = () => {
+
     const { t } = useTranslation()
+    const Stack = createStackNavigator()
+    const Tab = createBottomTabNavigator()
+
+    const BottomTab = () => {
+        return (
+            <Tab.Navigator
+                initialRouteName="Stations"
+                tabBarOptions={{
+                    activeTintColor: 'red',
+                    style: { backgroundColor: '#f7fcff' }
+                }}
+            >
+                <Tab.Screen
+                    name="Favorites"
+                    component={Favorites}
+                    options={{
+                        title: t('routes.favorites'),
+                        tabBarIcon: ({ color, size }) => (
+                            <AntDesign name="staro" color={color} size={size} />
+                        ),
+                    }}
+                />
+                <Tab.Screen
+                    name="Stations"
+                    component={Stations}
+                    options={{
+                        title: t('routes.stations'),
+                        tabBarIcon: ({ color, size }) => (
+                            <Entypo name="location" color={color} size={size} />
+                        ),
+                    }}
+                />
+                <Tab.Screen
+                    name="Lines"
+                    component={Lines}
+                    options={{
+                        title: t('routes.lines'),
+                        tabBarIcon: ({ color, size }) => (
+                            <Entypo name="dots-three-horizontal" color={color} size={size} />
+                        ),
+                    }}
+                />
+                <Tab.Screen
+                    name="About"
+                    component={About}
+                    options={{
+                        title: t('routes.about'),
+                        tabBarIcon: ({ color, size }) => (
+                            <Entypo name="info" color={color} size={size} />
+                        ),
+                    }}
+                />
+            </Tab.Navigator>
+        )
+    }
+
+    const getHeaderTitle = (route) => {
+
+        // Accessing the tab navigator's state using `route.state`
+        const routeName = route.state
+
+            ? // Get the currently active route name in the tab navigator
+            route.state.routes[route.state.index].name
+            : // If state doesn't exist, we need to default to `screen` param if available, or the initial screen
+            route.params?.screen || 'Stations'
+
+        switch (routeName) {
+            case 'Stations':
+                return t('routes.stationsHeader')
+            case 'Favorites':
+                return t('routes.favoritesHeader')
+            case 'Lines':
+                return t('routes.linesHeader')
+            case 'About':
+                return t('routes.aboutHeader')
+        }
+    }
 
     return (
         <NavigationContainer>
