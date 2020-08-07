@@ -129,7 +129,13 @@ export default Timetable = ({ route }) => {
                 </View>
             )
         }
-        else if (localTime.endsWith('AM') && parseInt(localTime) == 12 || localTime.endsWith('AM') && parseInt(localTime) <= 6) {
+        else if (busList.length === 0 && netInfo.isConnected &&
+            (
+                (localTime.endsWith('AM') && parseInt(localTime) == 12)
+                ||
+                (localTime.endsWith('AM') && parseInt(localTime) <= 6)
+            )
+        ) {
             return (
                 <View style={styles.localTime}>
                     <Text>{localTime} (GMT+4)</Text>
