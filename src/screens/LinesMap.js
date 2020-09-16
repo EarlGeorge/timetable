@@ -15,19 +15,21 @@ export default LinesMap = ({ route }) => {
     const navigation = useNavigation()
 
     /**
-     * 'markerData' contains station coords!
-     * 'polylinesData' contains entire bus route coords, 
+     * 'markerData' contains bus stations coords, Lat-Longitude!
+     * 'polylineData' contains entire bus route coords,
      * which is used to display yellow polyline on the map.
     **/
     const [db, setDb] = useState({
         markerData: [],
-        polylinesData: []
+        polylineData: []
     })
 
     /**
-     * Request for fetching bus route coords.
-     * Based on direction that is set in Lines screen,
-     * 'forward' variable can only have one value: 0 or 1.
+     * Request for fetching bus number route coords!
+     * Based on direction that is set in the Lines Screen, whether it's forward or backward,
+     * forward variable is a boolean! 
+     * API request sample.
+     * https://xxxxxxx:xxxx/xxxxxxxxx/?route=${busNumber}&forward=${forward}
     **/
     const endPointEn = `sorry API is hidden`
     const endPointGe = `sorry API is hidden`
@@ -46,7 +48,9 @@ export default LinesMap = ({ route }) => {
                 .then(data => {
                     setDb({
                         markerData: data.Stops,
-                        polylinesData: data.Stops.map((point) => { return { latitude: point.Lat, longitude: point.Lon } })
+                        polylineData: data.Stops.map((point) => {
+                            return { latitude: point.Lat, longitude: point.Lon }
+                        })
                     })
                 })
                 .catch(err => console.log(err))
@@ -62,14 +66,13 @@ export default LinesMap = ({ route }) => {
 
     // Opens Bus station timetable screen
     const openTimetable = (stopId, name) => {
-        navigation.navigate('Timetable',
-            { stationTimetableId: stopId, metadata: name })
+        navigation.navigate('Timetable', { stationTimetableId: stopId, metadata: name })
     }
 
     return (
         <Map
             markerSource={db.markerData}
-            polylineSource={db.polylinesData}
+            polylineSource={db.polylineData}
             onPressHandler={openTimetable}
         />
     )

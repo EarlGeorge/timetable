@@ -3,7 +3,7 @@ export default {
         routes: {
             favorites: 'რჩეული',
             favoritesHeader: 'რჩეული სია',
-            stations: 'რუქა',
+            stations: 'რუკა',
             stationsHeader: 'გაჩერება',
             timetable: 'განრიგი',
             lines: 'ხაზი',

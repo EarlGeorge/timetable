@@ -7,10 +7,9 @@ import { useTranslation } from 'react-i18next'
 import Button from '../components/Button'
 
 /**
- * About App screen and with Language setup button
+ * About App screen
  **/
 const About = () => {
-    // used for translation
     const { t, i18n } = useTranslation()
     const navigation = useNavigation()
 

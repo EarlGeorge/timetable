@@ -17,66 +17,72 @@ import LinesMap from './screens/LinesMap'
 import Lines from './screens/Lines'
 
 /**
+ * Bottom Tab Nav 
+**/
+const BottomTab = () => {
+
+    const Tab = createBottomTabNavigator()
+    const { t } = useTranslation()
+
+    return (
+        <Tab.Navigator
+            initialRouteName="Stations"
+            tabBarOptions={{
+                activeTintColor: 'red',
+                style: { backgroundColor: '#f7fcff' }
+            }}
+        >
+            <Tab.Screen
+                name="Favorites"
+                component={Favorites}
+                options={{
+                    title: t('routes.favorites'),
+                    tabBarIcon: ({ color, size }) => (
+                        <AntDesign name="staro" color={color} size={size} />
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name="Stations"
+                component={Stations}
+                options={{
+                    title: t('routes.stations'),
+                    tabBarIcon: ({ color, size }) => (
+                        <Entypo name="location" color={color} size={size} />
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name="Lines"
+                component={Lines}
+                options={{
+                    title: t('routes.lines'),
+                    tabBarIcon: ({ color, size }) => (
+                        <Entypo name="dots-three-horizontal" color={color} size={size} />
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name="About"
+                component={About}
+                options={{
+                    title: t('routes.about'),
+                    tabBarIcon: ({ color, size }) => (
+                        <Entypo name="info" color={color} size={size} />
+                    ),
+                }}
+            />
+        </Tab.Navigator>
+    )
+}
+
+/**
  * App root: *
 **/
 export default Routes = () => {
 
-    const { t } = useTranslation()
     const Stack = createStackNavigator()
-    const Tab = createBottomTabNavigator()
-
-    const BottomTab = () => {
-        return (
-            <Tab.Navigator
-                initialRouteName="Stations"
-                tabBarOptions={{
-                    activeTintColor: 'red',
-                    style: { backgroundColor: '#f7fcff' }
-                }}
-            >
-                <Tab.Screen
-                    name="Favorites"
-                    component={Favorites}
-                    options={{
-                        title: t('routes.favorites'),
-                        tabBarIcon: ({ color, size }) => (
-                            <AntDesign name="staro" color={color} size={size} />
-                        ),
-                    }}
-                />
-                <Tab.Screen
-                    name="Stations"
-                    component={Stations}
-                    options={{
-                        title: t('routes.stations'),
-                        tabBarIcon: ({ color, size }) => (
-                            <Entypo name="location" color={color} size={size} />
-                        ),
-                    }}
-                />
-                <Tab.Screen
-                    name="Lines"
-                    component={Lines}
-                    options={{
-                        title: t('routes.lines'),
-                        tabBarIcon: ({ color, size }) => (
-                            <Entypo name="dots-three-horizontal" color={color} size={size} />
-                        ),
-                    }}
-                />
-                <Tab.Screen
-                    name="About"
-                    component={About}
-                    options={{
-                        title: t('routes.about'),
-                        tabBarIcon: ({ color, size }) => (
-                            <Entypo name="info" color={color} size={size} />
-                        ),
-                    }}
-                />
-            </Tab.Navigator>
-        )
-    }
+    const { t } = useTranslation()
 
     const getHeaderTitle = (route) => {
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { View, Text, StyleSheet, RefreshControl, Alert } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 import { useNetInfo } from "@react-native-community/netinfo"
@@ -26,7 +26,12 @@ export default Timetable = ({ route }) => {
     const { stationTimetableId, metadata } = route.params
     const metainfo = { station: stationTimetableId, info: metadata }
 
-    // Arrival bus list
+    /**
+     * Arrival bus list!
+     * Used to get latest info.
+     * API request sample. 
+     * https://xxxxxxx:xxxx/xxxxxxxxxxxx/?station=${stationTimetableId}
+    **/
     const [busList, setBusList] = useState([])
     const endPointEn = `sorry API is hidden`
     const endPointGe = `sorry API is hidden`
@@ -50,16 +55,16 @@ export default Timetable = ({ route }) => {
             ))
 
         const interval = setInterval(() => {
-            setLocalTime(new Date().toLocaleTimeString('en-US', 'ka-KA'))
+            setLocalTime(new Date().toLocaleTimeString('en-US', { hour12: false }, 'ka-KA'))
         }, 1000)
 
         // clean up
         return () => { controller.abort(); clearInterval(interval) }
     }, [])
 
-    const [refreshing, setRefreshing] = React.useState(false);
+    const [refreshing, setRefreshing] = useState(false)
 
-    const onRefresh = React.useCallback(() => {
+    const onRefresh = useCallback(() => {
         setRefreshing(true)
 
         fetch(endPoint)
@@ -114,13 +119,7 @@ export default Timetable = ({ route }) => {
     **/
 
     const displayTime = () => {
-        if (busList.length === 0 && netInfo.isConnected &&
-            (
-                (localTime.endsWith('AM') && parseInt(localTime) >= 7 && parseInt(localTime) !== 12)
-                ||
-                (localTime.endsWith('PM') && parseInt(localTime) <= 12)
-            )
-        ) {
+        if (parseInt(localTime) >= 7 && parseInt(localTime) <= 22) {
             return (
                 <View style={styles.localTime}>
                     <Text>{localTime} (GMT+4)</Text>
@@ -129,13 +128,7 @@ export default Timetable = ({ route }) => {
                 </View>
             )
         }
-        else if (busList.length === 0 && netInfo.isConnected &&
-            (
-                (localTime.endsWith('AM') && parseInt(localTime) == 12)
-                ||
-                (localTime.endsWith('AM') && parseInt(localTime) <= 6)
-            )
-        ) {
+        else if (parseInt(localTime) >= 0 && parseInt(localTime) <= 6 || parseInt(localTime) == 23) {
             return (
                 <View style={styles.localTime}>
                     <Text>{localTime} (GMT+4)</Text>
@@ -174,7 +167,7 @@ export default Timetable = ({ route }) => {
                     />
                 }
             />
-            {displayTime()}
+            {netInfo.isConnected && busList.length === 0 && displayTime()}
         </View>
     )
 }
@@ -213,5 +206,3 @@ const styles = StyleSheet.create({
         marginVertical: 150,
     }
 })
-
-
