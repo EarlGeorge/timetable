@@ -7,7 +7,7 @@ import { sendGridEmail } from 'react-native-sendgrid'
 // Component 
 import Form from '../components/Form'
 
-const sendGridKey = '***'
+const sendGridApiKey = '***'
 const sendTo = '***'
 const subject = 'Bus Timetable Feedback'
 
@@ -24,7 +24,7 @@ const Feedback = () => {
 
         const contact = `Contact: ${values.name}. Mail: ${values.email}. Message: ${values.message}.`
 
-        sendGridEmail(sendGridKey, sendTo, sendFrom, subject, contact)
+        sendGridEmail(sendGridApiKey, sendTo, sendFrom, subject, contact)
             .then(() => {
                 Alert.alert('', t('feedback.onSuccessfulSubmit'),
                     [{
