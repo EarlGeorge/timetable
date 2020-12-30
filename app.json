@@ -3,7 +3,6 @@
     "name": "Bus Timetable",
     "slug": "bus-timetable-app",
     "privacy": "public",
-    "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
       "android"

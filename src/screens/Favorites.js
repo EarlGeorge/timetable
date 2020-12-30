@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { AntDesign } from '@expo/vector-icons'
 
-
+// FlatList Items
 const Item = ({ station, info }) => {
     const navigation = useNavigation()
     const { t } = useTranslation()
@@ -15,7 +15,7 @@ const Item = ({ station, info }) => {
     const onDeleteHandler = async () => {
         const result = await AsyncStorage.getItem('TestFavorite')
         if (result !== null) {
-            const array = await (JSON.parse(result))
+            const array = await JSON.parse(result)
             const deleteItem = await array.filter(item => item.station !== station)
             AsyncStorage.setItem('TestFavorite', JSON.stringify(deleteItem))
         }
@@ -26,16 +26,12 @@ const Item = ({ station, info }) => {
         <TouchableHighlight style={styles.touchableHighlight}
             onPress={() => { navigation.navigate('Timetable', { stationTimetableId: station }) }}
             onLongPress={() => setModalVisible(true)}
-            delayLongPress={25}
             activeOpacity={0.1}
             underlayColor={'rgba(186, 207, 222, 0.7)'}
         >
             <View style={styles.item}>
-
                 <View style={styles.separator} />
-
                 <Text style={styles.title}>{info}</Text>
-
                 <Modal
                     animationType="slide"
                     transparent={true}
@@ -50,16 +46,13 @@ const Item = ({ station, info }) => {
                             <Text style={styles.stationID}>{station}</Text>
 
                             <View style={styles.modalButtons}>
-
                                 <TouchableOpacity onPress={onDeleteHandler} style={styles.modalButtonYes}>
                                     <Text style={styles.modalButtonYesText}>{t('favorites.modalButtonYes')}</Text>
                                 </TouchableOpacity>
 
-
                                 <TouchableOpacity onPress={() => setModalVisible(!modalVisible)} style={styles.modalButtonNo}>
                                     <Text style={styles.modalButtonNoText}>{t('favorites.modalButtonNo')}</Text>
                                 </TouchableOpacity>
-
                             </View>
                         </View>
                     </View>

@@ -33,7 +33,12 @@ const Feedback = () => {
                     }]
                 )
             })
-            .catch(() => Alert.alert(t('feedback.error'), t('feedback.onSubmitError'), [{ text: t('feedback.cancel') }]))
+            .catch(() => {
+                Alert.alert(t('feedback.error'),
+                    t('feedback.onSubmitError'),
+                    [{ text: t('feedback.cancel') }]
+                )
+            })
     }
 
     return (

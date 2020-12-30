@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
+import { NavigationContainer, getFocusedRouteNameFromRoute } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
 import { AntDesign, Entypo } from '@expo/vector-icons'
@@ -86,13 +86,12 @@ export default Routes = () => {
 
     const getHeaderTitle = (route) => {
 
-        // Accessing the tab navigator's state using `route.state`
-        const routeName = route.state
+        // Accessing the tab navigator's state using 'getFocusedRouteNameFromRoute'
 
-            ? // Get the currently active route name in the tab navigator
-            route.state.routes[route.state.index].name
-            : // If state doesn't exist, we need to default to `screen` param if available, or the initial screen
-            route.params?.screen || 'Stations'
+        // If the focused route is not found, we need to assume it's the initial screen
+        // This can happen during if there hasn't been any navigation inside the screen
+        // In our case, default is set to 'Stations'
+        const routeName = getFocusedRouteNameFromRoute(route) ?? 'Stations'
 
         switch (routeName) {
             case 'Stations':
