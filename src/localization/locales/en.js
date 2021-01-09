@@ -22,7 +22,7 @@ export default {
       minText: 'min',
       favorite: 'Already exists in Favorites list',
       error: 'Error occurred!',
-      server_err: 'Temporarry Server issue, try later.',
+      server_err: 'Temporary Server issue, try later.',
       cancel: 'Cancel',
       localTime: 'Georgia Local Time.',
       localTimeDelay: 'Approximately time delay is 30+ min!',

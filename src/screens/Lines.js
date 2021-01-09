@@ -20,10 +20,10 @@ function Item({ busNumber, stopA, stopB }) {
 
     const [boolean, setBoolean] = useState(true)
     //  Change Bus lines Direction
-    const changeDirectrionHandler = () => setBoolean(!boolean)
+    const changeDirectionHandler = () => setBoolean(!boolean)
 
-    // Bus Lines start-end directrion
-    const directrion = boolean ?
+    // Bus Lines start-end direction
+    const direction = boolean ?
         (
             <TouchableOpacity onPress={() => navigation.navigate('LinesMap', { busNumber, forward: 0 })} >
                 <View style={styles.listItem}>
@@ -52,10 +52,10 @@ function Item({ busNumber, stopA, stopB }) {
                 <Text style={styles.busNumber}>{busNumber}</Text>
             </View>
             <Text style={styles.from}>{t('lines.from')}</Text>
-            {directrion}
+            {direction}
             <View style={styles.changeDirection}>
                 <Button
-                    onPress={changeDirectrionHandler}
+                    onPress={changeDirectionHandler}
                     text={t('lines.change')}
                     buttonColor='#c7dceb'
                     textColor='#1f5c87'
