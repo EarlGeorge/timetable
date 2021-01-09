@@ -28,7 +28,7 @@ function Item({ busNumber, stopA, stopB }) {
             <TouchableOpacity onPress={() => navigation.navigate('LinesMap', { busNumber, forward: 0 })} >
                 <View style={styles.listItem}>
                     <Text>{stopA}</Text>
-                    <Entypo name="arrow-long-right" color='#1f5c87' size={25} style={styles.directrionIcon} />
+                    <Entypo name="arrow-long-right" color='#1f5c87' size={25} />
                     <Text>{stopB}</Text>
                 </View>
             </TouchableOpacity>
@@ -38,7 +38,7 @@ function Item({ busNumber, stopA, stopB }) {
             <TouchableOpacity onPress={() => navigation.navigate('LinesMap', { busNumber, forward: 1 })} >
                 <View style={styles.listItem}>
                     <Text>{stopB}</Text>
-                    <Entypo name="arrow-long-right" color='#1f5c87' size={25} style={styles.directrionIcon} />
+                    <Entypo name="arrow-long-right" color='#1f5c87' size={25} />
                     <Text>{stopA}</Text>
                 </View>
             </TouchableOpacity>
