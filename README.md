@@ -6,7 +6,8 @@ It is similar to Moovit.app but only supports one country,
 Georgia Tbilisi === საქართველო თბილისი.
 ```
 
-<img src="./app-gif.gif" alt="gif" width="200px" />
+<img src="./app-gif.gif" alt="app overview" width="200px" />
+<img src="./app-gif-table.gif" alt="table overview" width="200px" />
 
 ----
 
@@ -18,10 +19,10 @@ Georgia Tbilisi === საქართველო თბილისი.
 # Technology:
 | **Tech** | **Description** |**Using** |
 |----------|-------|----|
-| **ReactNative** | React Native app for Android & iOS | [react-native](https://reactnative.dev/), [expo](https://expo.io/)
+| **React Native** | React Native app for Android & iOS | [react-native](https://reactnative.dev/), [expo](https://expo.io/)
 | **CSS-in-JS**  | A StyleSheet is an abstraction similar to CSS StyleSheets | [StyleSheet](https://reactnative.dev/docs/next/stylesheet)
 | **JavaScript** | Seems like javascript LUL | [RN](https://reactnative.dev/)
-| **DATA SOURCE** | Database for getting bus info based on vehicle location | [DataBase]()
+| **Data Source** | Database for getting bus info based on vehicle location | [DataBase]()
 | **Deployed** |  Available on Android but iOS isn't available yet.  | [Play Store](https://play.google.com/store/apps/details?id=com.davituri.timetable), [App Store](https://www.apple.com/ios/app-store/)
 
 ## Feedback
