@@ -6,8 +6,10 @@ It is similar to Moovit.app but only supports one country,
 Georgia Tbilisi === საქართველო თბილისი.
 ```
 
-<img src="./app-gif.gif" alt="app overview" width="200px" />
-<img src="./app-gif-table.gif" alt="table overview" width="200px" />
+<p float="left" padding="0 20px">
+    <img src="./app-gif.gif" alt="app overview" width="200px" />
+    <img src="./app-gif-table.gif" alt="table overview" width="200px" />
+</p>
 
 ----
 
