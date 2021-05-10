@@ -3,11 +3,8 @@
     "name": "Bus Timetable",
     "slug": "bus-timetable-app",
     "privacy": "public",
-    "platforms": [
-      "ios",
-      "android"
-    ],
-    "version": "1.0.0",
+    "platforms": ["ios", "android"],
+    "version": "2.2.0",
     "orientation": "portrait",
     "icon": "./src/assets/images/timetableicon.png",
     "splash": {
@@ -18,12 +15,10 @@
     "updates": {
       "fallbackToCacheTimeout": 30000
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "com.davituri.timetable",
-      "buildNumber": "1.0.0",
+      "buildNumber": "2.2.0",
       "supportsTablet": true,
       "config": {
         "googleMapsApiKey": " "
@@ -31,7 +26,12 @@
     },
     "android": {
       "package": "com.davituri.timetable",
-      "versionCode": 1,
+      "versionCode": 2,
+      "permissions": [
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "ACCESS_FINE_LOCATION"
+      ],
       "config": {
         "googleMaps": {
           "apiKey": " "

@@ -15,39 +15,31 @@ const Stations = () => {
   const { i18n } = useTranslation()
 
   const [db, setDb] = useState({
-    lat: 41.71942312743827,
-    long: 44.77002225551471,
     markers: [],
     loading: true
   })
 
   useEffect(() => {
-
     const unsubscribe = navigation.addListener('focus', () => {
-      const station = i18n.language == 'en' ? (EnDb.Stops) : (GeDb.Stops)
+      const station = i18n.language == 'en' ? EnDb.Stops : GeDb.Stops
       setDb({ markers: station, loading: false })
     })
 
     // Cleanup
     return unsubscribe
-
   }, [navigation])
 
-  // Opens Timetable screen which takes some props from map marker 
+  // Opens Timetable screen which takes some props from map marker
   const openTimetable = (stopId, name) => {
-    navigation.navigate('Timetable',
-      { stationTimetableId: stopId, metadata: name }
-    )
+    navigation.navigate('Timetable', {
+      stationTimetableId: stopId,
+      metadata: name
+    })
   }
 
   return db.loading ? null : (
     <View style={styles.container}>
-      <Map
-        lat={db.lat}
-        long={db.long}
-        markerSource={db.markers}
-        onPressHandler={openTimetable}
-      />
+      <Map markerSource={db.markers} onPressHandler={openTimetable} />
     </View>
   )
 }
@@ -57,6 +49,6 @@ export default Stations
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#bacfde"
+    backgroundColor: '#bacfde'
   }
 })

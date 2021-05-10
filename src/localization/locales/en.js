@@ -11,7 +11,7 @@ export default {
       linesMap: 'Bus Line Map',
       about: 'About',
       aboutHeader: 'About App',
-      feedback: 'Feedback',
+      feedback: 'Feedback'
     },
     timetable: {
       station: 'Station ID:',
