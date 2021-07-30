@@ -21,7 +21,9 @@ export default Form = ({
   submitTitle,
   schemaRequiredName,
   schemaRequiredEmail,
-  schemaRequiredMessage
+  schemaRequiredMessage,
+  buttonColor,
+  buttonText
 }) => {
   // Schema for input validation
 
@@ -87,8 +89,13 @@ export default Form = ({
 
           <Text style={styles.error}>{touched.message && errors.message}</Text>
 
-          <TouchableOpacity onPress={handleSubmit} style={styles.button}>
-            <Text style={styles.buttonText}>{submitTitle}</Text>
+          <TouchableOpacity
+            onPress={handleSubmit}
+            style={[styles.button, { backgroundColor: buttonColor }]}
+          >
+            <Text style={[styles.buttonText, { color: buttonText }]}>
+              {submitTitle}
+            </Text>
           </TouchableOpacity>
         </View>
       )}
@@ -118,8 +125,7 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 15,
     paddingVertical: 10,
-    paddingHorizontal: 10,
-    backgroundColor: '#c7dceb'
+    paddingHorizontal: 10
   },
   buttonText: {
     color: 'white',

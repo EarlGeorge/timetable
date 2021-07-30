@@ -27,7 +27,6 @@
     "react-native-maps": "0.27.1",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.0.0",
-    "react-native-sendgrid": "^1.0.1",
     "swr": "^0.5.5",
     "yup": "^0.28.4"
   },

@@ -1,14 +1,34 @@
 import React from 'react'
-import { StyleSheet, TouchableOpacity, Text } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 
-export default Button = ({ text, onPress, buttonColor, textColor }) => {
+export default Button = ({
+  text,
+  onPress,
+  buttonColor,
+  textColor,
+  margin,
+  paddingVertical,
+  fontSize
+}) => {
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={[styles.button, { backgroundColor: buttonColor }]}
-    >
-      <Text style={[styles.buttonText, { color: textColor }]}>{text}</Text>
-    </TouchableOpacity>
+    <View style={{ margin }}>
+      <TouchableOpacity
+        onPress={onPress}
+        style={[
+          styles.button,
+          { backgroundColor: buttonColor, paddingVertical }
+        ]}
+      >
+        <Text
+          style={[
+            styles.buttonText,
+            { color: textColor, paddingVertical, fontSize }
+          ]}
+        >
+          {text}
+        </Text>
+      </TouchableOpacity>
+    </View>
   )
 }
 

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet
 } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useTheme } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { MaterialCommunityIcons, Entypo } from '@expo/vector-icons'
 
@@ -25,6 +25,7 @@ import GeBus from '../DBSourceMocking/Ge-Bus-Lines-min.json'
 const Lines = () => {
   const { i18n, t } = useTranslation()
   const navigation = useNavigation()
+  const { theme } = useTheme()
 
   const [busArray, setBusArray] = useState([])
 
@@ -52,9 +53,9 @@ const Lines = () => {
         }
       >
         <View style={styles.listItem}>
-          <Text>{stopA}</Text>
+          <Text style={{ color: theme.text }}>{stopA}</Text>
           <Entypo name='arrow-long-right' color='#1f5c87' size={25} />
-          <Text>{stopB}</Text>
+          <Text style={{ color: theme.text }}>{stopB}</Text>
         </View>
       </TouchableOpacity>
     ) : (
@@ -64,33 +65,53 @@ const Lines = () => {
         }
       >
         <View style={styles.listItem}>
-          <Text>{stopB}</Text>
+          <Text style={{ color: theme.text }}>{stopB}</Text>
           <Entypo name='arrow-long-right' color='#1f5c87' size={25} />
-          <Text>{stopA}</Text>
+          <Text style={{ color: theme.text }}>{stopA}</Text>
         </View>
       </TouchableOpacity>
     )
 
     return (
       <View>
-        <View style={styles.separator} />
-        <View style={styles.wrapBusIcon}>
+        <View style={[styles.separator, { borderBottomColor: theme.border }]} />
+
+        <View
+          style={[
+            styles.wrapBusIcon,
+            {
+              backgroundColor: theme.backgroundColor,
+              borderColor: theme.border
+            }
+          ]}
+        >
           <MaterialCommunityIcons
             name='bus'
             color='#1f5c87'
             size={15}
             style={styles.busIcon}
           />
-          <Text style={styles.busNumber}>{busNumber}</Text>
+
+          <Text style={[styles.busNumber, { color: theme.text }]}>
+            {busNumber}
+          </Text>
         </View>
-        <Text style={styles.from}>{t('lines.from')}</Text>
+
+        <Text style={[styles.from, { color: theme.text }]}>
+          {t('lines.from')}
+        </Text>
+
         {direction}
+
         <View style={styles.changeDirection}>
           <Button
             onPress={changeDirectionHandler}
             text={t('lines.change')}
-            buttonColor='#c7dceb'
-            textColor='#1f5c87'
+            buttonColor={theme.buttonColor}
+            textColor={theme.buttonText}
+            margin={0}
+            paddingVertical={4}
+            fontSize={12}
           />
         </View>
       </View>
@@ -119,16 +140,13 @@ export default Lines
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#bacfde',
     justifyContent: 'space-between'
   },
   wrapBusIcon: {
     margin: 2,
     width: 46,
     height: 25,
-    borderColor: 'white',
     borderStyle: 'solid',
-    backgroundColor: '#c7dceb',
     borderWidth: 1.5,
     borderBottomColor: 'yellow',
     borderBottomLeftRadius: 10,
@@ -144,7 +162,6 @@ const styles = StyleSheet.create({
   busNumber: {
     top: -8,
     marginLeft: 14,
-    color: 'black',
     fontSize: 12,
     fontWeight: 'bold'
   },
@@ -159,7 +176,6 @@ const styles = StyleSheet.create({
   },
   from: {
     textAlign: 'center',
-    color: 'black',
     top: -10,
     fontWeight: 'bold'
   },
@@ -168,7 +184,6 @@ const styles = StyleSheet.create({
   },
   separator: {
     marginVertical: 8,
-    borderBottomColor: '#737373',
     borderBottomWidth: StyleSheet.hairlineWidth
   }
 })

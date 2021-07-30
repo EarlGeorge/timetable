@@ -2,12 +2,13 @@ import React from 'react'
 import { Marker, Polyline } from 'react-native-maps'
 import MapView from 'react-native-map-clustering'
 import night from '../assets/night.json'
+import day from '../assets/day.json'
 
 /**
  * Google Map
  **/
 
-const Map = ({ polylineSource, markerSource, onPressHandler }) => {
+const Map = ({ polylineSource, markerSource, onPressHandler, isDark }) => {
   // MapView Markers
   const markers = () => {
     if (markerSource.length > 0) {
@@ -56,11 +57,11 @@ const Map = ({ polylineSource, markerSource, onPressHandler }) => {
         latitudeDelta: 0.35,
         longitudeDelta: 0.25
       }}
-      clusterColor={'rgba(255, 0, 0, 0.4)'}
+      clusterColor={isDark ? 'rgba(255, 0, 0, 0.4)' : 'rgba(255, 0, 0, 0.5)'}
       radius={170}
       extent={700}
       showsCompass={true}
-      customMapStyle={night}
+      customMapStyle={isDark ? night : day}
       showsUserLocation={true}
       showsMyLocationButton={true}
       followsUserLocation={true}

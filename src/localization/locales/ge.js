@@ -30,7 +30,7 @@ export default {
     },
     favorites: {
       modal: 'გსურს არჩეული გაჩერების წაშლა?',
-      modalButtonYes: 'დიახ წავშალოთ',
+      modalButtonYes: 'დიახ',
       modalButtonNo: 'გაუქმება',
       empty: 'დაამატეთ სასურველი გაჩერება, რომ აისახოს.'
     },

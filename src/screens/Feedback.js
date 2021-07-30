@@ -8,9 +8,8 @@ import {
   ScrollView,
   Alert
 } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useTheme } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
-import { sendGridEmail } from 'react-native-sendgrid'
 
 // Component
 import Form from '../components/Form'
@@ -18,6 +17,7 @@ import Form from '../components/Form'
 // Sends Form input to your email using sendGrid!
 const sendGridApiKey = '***'
 const sendTo = '***'
+const sendFrom = '***'
 const subject = 'Bus Timetable Feedback'
 
 /**
@@ -27,21 +27,40 @@ const subject = 'Bus Timetable Feedback'
 const Feedback = () => {
   const navigation = useNavigation()
   const { t } = useTranslation()
+  const { theme } = useTheme()
 
   const sendEmailHandler = ({ name, email, message }) => {
-    const contact = {
-      Name: name,
-      Mail: email,
-      Message: message
-    }
+    const data = JSON.stringify({ name, email, message }).replace(/[{}'']/g, '')
 
-    sendGridEmail(
-      sendGridApiKey,
-      sendTo,
-      email,
-      subject,
-      JSON.stringify(contact).replace(/[{}'']/g, '')
-    )
+    fetch('https://api.sendgrid.com/v3/mail/send', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + sendGridApiKey
+      },
+      body: JSON.stringify({
+        personalizations: [
+          {
+            to: [
+              {
+                email: sendTo
+              }
+            ],
+            subject: subject
+          }
+        ],
+        from: {
+          email: sendFrom
+        },
+        content: [
+          {
+            type: 'text/plain',
+            value: data
+          }
+        ]
+      })
+    })
       .then(() => {
         Alert.alert('', t('feedback.onSuccessfulSubmit'), [
           {
@@ -60,7 +79,9 @@ const Feedback = () => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
-        <Text style={styles.info}>{t('feedback.info')}</Text>
+        <Text style={[styles.info, { color: theme.text }]}>
+          {t('feedback.info')}
+        </Text>
         <ScrollView style={styles.form}>
           <Form
             onSubmitHandler={sendEmailHandler}
@@ -71,6 +92,8 @@ const Feedback = () => {
             schemaRequiredName={t('feedback.schemaRequiredName')}
             schemaRequiredEmail={t('feedback.schemaRequiredEmail')}
             schemaRequiredMessage={t('feedback.schemaRequiredMessage')}
+            buttonColor={theme.buttonColor}
+            buttonText={theme.buttonText}
           />
         </ScrollView>
       </View>
@@ -84,8 +107,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#bacfde'
+    alignItems: 'center'
   },
   info: {
     top: 20,

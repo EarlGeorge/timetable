@@ -8,6 +8,7 @@ import {
   Animated,
   Easing
 } from 'react-native'
+import { useTheme } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNetInfo } from '@react-native-community/netinfo'
 import { useTranslation } from 'react-i18next'
@@ -20,6 +21,7 @@ import useSWR from 'swr'
 
 const Timetable = ({ route }) => {
   const { t, i18n } = useTranslation()
+  const { theme } = useTheme()
   // netInfo helps to check network connection status. Timeout 15s
   const netInfo = useNetInfo({ reachabilityRequestTimeout: 15 * 1000 })
 
@@ -44,9 +46,9 @@ const Timetable = ({ route }) => {
   // Stream of data
   const fetcher = (...args) => fetch(...args).then(res => res.json())
 
-  const { data, error, revalidate } = useSWR(endPoint, fetcher)
-
-  revalidate()
+  const { data, error } = useSWR(endPoint, fetcher, {
+    refreshInterval: 1000 * 10
+  })
 
   // Bouncing animation
   const focus = new Animated.Value(0)
@@ -127,9 +129,11 @@ const Timetable = ({ route }) => {
     if (parseInt(localTime) >= 7 && parseInt(localTime) <= 22) {
       return (
         <View style={styles.localTime}>
-          <Text>{localTime} (GMT+4)</Text>
-          <Text>{t('timetable.localTime')}</Text>
-          <Text>{t('timetable.localTimeDelay')}</Text>
+          <Text style={{ color: theme.text }}>{localTime} (GMT+4)</Text>
+          <Text style={{ color: theme.text }}>{t('timetable.localTime')}</Text>
+          <Text style={{ color: theme.text }}>
+            {t('timetable.localTimeDelay')}
+          </Text>
         </View>
       )
     } else if (
@@ -138,9 +142,11 @@ const Timetable = ({ route }) => {
     ) {
       return (
         <View style={styles.localTime}>
-          <Text>{localTime} (GMT+4)</Text>
-          <Text>{t('timetable.localTime')}</Text>
-          <Text>{t('timetable.localTimeNight')}</Text>
+          <Text style={{ color: theme.text }}>{localTime} (GMT+4)</Text>
+          <Text style={{ color: theme.text }}>{t('timetable.localTime')}</Text>
+          <Text style={{ color: theme.text }}>
+            {t('timetable.localTimeNight')}
+          </Text>
         </View>
       )
     }
@@ -155,12 +161,12 @@ const Timetable = ({ route }) => {
       if (time <= 2 || 0) {
         return (
           <Animated.View style={{ opacity: focus }}>
-            <Text>{nowText}</Text>
+            <Text style={{ color: theme.text }}>{nowText}</Text>
           </Animated.View>
         )
       } else {
         return (
-          <Text>
+          <Text style={{ color: theme.text }}>
             {time} {minText}
           </Text>
         )
@@ -168,9 +174,9 @@ const Timetable = ({ route }) => {
     }
 
     return (
-      <View style={styles.listItemView}>
-        <Text>{bus}</Text>
-        <Text style={styles.title}>{title}</Text>
+      <View style={[styles.listItemView, { borderColor: theme.border }]}>
+        <Text style={{ color: theme.text }}>{bus}</Text>
+        <Text style={[styles.title, { color: theme.text }]}>{title}</Text>
         {willBeIn()}
       </View>
     )
@@ -178,7 +184,7 @@ const Timetable = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.info}>
+      <Text style={[styles.info, { color: theme.text }]}>
         {t('timetable.station')} {stationTimetableId}
       </Text>
 
@@ -191,9 +197,9 @@ const Timetable = ({ route }) => {
       />
 
       <View style={styles.listHeader}>
-        <Text>{t('timetable.bus')}</Text>
-        <Text>{t('timetable.direction')}</Text>
-        <Text>{t('timetable.time')}</Text>
+        <Text style={{ color: theme.text }}>{t('timetable.bus')}</Text>
+        <Text style={{ color: theme.text }}>{t('timetable.direction')}</Text>
+        <Text style={{ color: theme.text }}>{t('timetable.time')}</Text>
       </View>
 
       {!data ? null : (
@@ -223,8 +229,7 @@ export default Timetable
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#bacfde'
+    flex: 1
   },
   info: {
     marginTop: 5,
@@ -259,7 +264,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderStyle: 'solid',
-    borderColor: 'white',
     borderWidth: 1,
     padding: 20,
     marginVertical: 4,

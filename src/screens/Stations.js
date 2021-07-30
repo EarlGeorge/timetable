@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View, StyleSheet } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useTheme } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 
 // Components
@@ -13,16 +13,16 @@ import GeDb from '../DBSourceMocking/Ge-DB-min.json'
 const Stations = () => {
   const navigation = useNavigation()
   const { i18n } = useTranslation()
+  const { dark } = useTheme()
 
   const [db, setDb] = useState({
-    markers: [],
-    loading: true
+    markers: []
   })
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       const station = i18n.language == 'en' ? EnDb.Stops : GeDb.Stops
-      setDb({ markers: station, loading: false })
+      setDb({ markers: station })
     })
 
     // Cleanup
@@ -37,9 +37,13 @@ const Stations = () => {
     })
   }
 
-  return db.loading ? null : (
+  return (
     <View style={styles.container}>
-      <Map markerSource={db.markers} onPressHandler={openTimetable} />
+      <Map
+        markerSource={db.markers}
+        onPressHandler={openTimetable}
+        isDark={dark}
+      />
     </View>
   )
 }
@@ -48,7 +52,6 @@ export default Stations
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#bacfde'
+    flex: 1
   }
 })

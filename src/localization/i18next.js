@@ -13,7 +13,7 @@ i18next
     detect: async callback => {
       const selectedLanguage = await AsyncStorage.getItem('i18NextBusTimetable')
 
-      callback(selectedLanguage || ' ')
+      callback(selectedLanguage || 'en')
     },
     cacheUserLanguage: () => {}
   })

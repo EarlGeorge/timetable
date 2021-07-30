@@ -5,13 +5,15 @@ import {
   StyleSheet,
   FlatList,
   TouchableHighlight,
-  Modal,
-  TouchableOpacity
+  Modal
 } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useTheme } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 import { AntDesign } from '@expo/vector-icons'
+
+// components
+import Button from '../components/Button'
 
 /**
  * Favorite Bus stations screen
@@ -20,6 +22,7 @@ import { AntDesign } from '@expo/vector-icons'
 const Favorites = () => {
   const navigation = useNavigation()
   const { t } = useTranslation()
+  const { theme } = useTheme()
 
   const [list, setList] = useState([])
   const [refreshing, setRefreshing] = useState(false)
@@ -72,42 +75,58 @@ const Favorites = () => {
         }}
         onLongPress={() => setModalVisible(true)}
         activeOpacity={0.1}
-        underlayColor={'rgba(186, 207, 222, 0.7)'}
+        underlayColor={'transparent'}
       >
         <View style={styles.item}>
-          <View style={styles.separator} />
-          <Text style={styles.title}>{info}</Text>
+          <View
+            style={[styles.separator, { borderBottomColor: theme.border }]}
+          />
+
+          <Text style={{ color: theme.text }}>{info}</Text>
+
           <Modal
             animationType='slide'
             transparent={true}
             visible={modalVisible}
             onRequestClose={() => setModalVisible(!modalVisible)}
           >
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                <Text style={styles.modalText}>{t('favorites.modal')}</Text>
+            <View
+              style={[
+                styles.modalView,
+                {
+                  backgroundColor: theme.backgroundColor,
+                  shadowColor: theme.shadow
+                }
+              ]}
+            >
+              <Text style={[styles.modalText, { color: theme.text }]}>
+                {t('favorites.modal')}
+              </Text>
 
-                <Text style={styles.stationID}>{station}</Text>
+              <Text style={[styles.modalStation, { color: theme.text }]}>
+                {info}
+              </Text>
 
-                <View style={styles.modalButtons}>
-                  <TouchableOpacity
-                    onPress={onDeleteHandler}
-                    style={styles.modalButtonYes}
-                  >
-                    <Text style={styles.modalButtonYesText}>
-                      {t('favorites.modalButtonYes')}
-                    </Text>
-                  </TouchableOpacity>
+              <View style={styles.modalButtons}>
+                <Button
+                  onPress={onDeleteHandler}
+                  text={t('favorites.modalButtonYes')}
+                  buttonColor={theme.buttonColor}
+                  textColor='red'
+                  margin={25}
+                  paddingVertical={4}
+                  fontSize={15}
+                />
 
-                  <TouchableOpacity
-                    onPress={() => setModalVisible(!modalVisible)}
-                    style={styles.modalButtonNo}
-                  >
-                    <Text style={styles.modalButtonNoText}>
-                      {t('favorites.modalButtonNo')}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+                <Button
+                  onPress={() => setModalVisible(!modalVisible)}
+                  text={t('favorites.modalButtonNo')}
+                  buttonColor={theme.buttonColor}
+                  textColor={theme.buttonText}
+                  margin={25}
+                  paddingVertical={4}
+                  fontSize={15}
+                />
               </View>
             </View>
           </Modal>
@@ -131,7 +150,7 @@ const Favorites = () => {
       ) : (
         <View style={styles.emptyList}>
           <AntDesign name='staro' color='white' size={45} />
-          <Text>{t('favorites.empty')}</Text>
+          <Text style={{ color: theme.text }}>{t('favorites.empty')}</Text>
         </View>
       )}
     </View>
@@ -142,8 +161,7 @@ export default Favorites
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#bacfde'
+    flex: 1
   },
   touchableHighlight: {
     alignItems: 'center',
@@ -164,10 +182,8 @@ const styles = StyleSheet.create({
   modalView: {
     top: 50,
     margin: 20,
-    backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
-    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2
@@ -180,45 +196,16 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between'
   },
-  modalButtonYes: {
-    margin: 10,
-    borderRadius: 15,
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    backgroundColor: '#f0f6ff'
-  },
-  modalButtonYesText: {
-    color: 'red',
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-    fontSize: 17,
-    textAlign: 'center'
-  },
-  modalButtonNo: {
-    margin: 10,
-    borderRadius: 15,
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    backgroundColor: '#f0f6ff'
-  },
-  modalButtonNoText: {
-    color: '#99b1c2',
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-    fontSize: 17,
-    textAlign: 'center'
-  },
   modalText: {
     marginBottom: 30,
     textAlign: 'center'
   },
-  stationID: {
+  modalStation: {
     marginBottom: 30,
     textAlign: 'center'
   },
   separator: {
     marginVertical: 8,
-    borderBottomColor: '#737373',
     borderBottomWidth: StyleSheet.hairlineWidth
   }
 })

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useTheme } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
 
 // Components
@@ -10,10 +10,11 @@ import Map from '../components/Map'
  **/
 
 const LinesMap = ({ route }) => {
-  const { busNumber, forward } = route.params
-
   const { i18n } = useTranslation()
   const navigation = useNavigation()
+  const { dark } = useTheme()
+
+  const { busNumber, forward } = route.params
 
   /**
    * 'markerData' contains bus stations coords, Lat-Longitude!
@@ -75,6 +76,7 @@ const LinesMap = ({ route }) => {
       markerSource={db.markerData}
       polylineSource={db.polylineData}
       onPressHandler={openTimetable}
+      isDark={dark}
     />
   )
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   NavigationContainer,
   getFocusedRouteNameFromRoute
@@ -7,6 +7,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
 import { AntDesign, Entypo } from '@expo/vector-icons'
 import { useTranslation } from 'react-i18next'
+
+/**
+ * Dark Light Mode.
+ **/
+
+import { ThemeContext } from './Theme'
 
 /**
  * App Screens
@@ -27,13 +33,15 @@ import Lines from './screens/Lines'
 const BottomTab = () => {
   const Tab = createBottomTabNavigator()
   const { t } = useTranslation()
+  const { theme } = useContext(ThemeContext)
 
   return (
     <Tab.Navigator
       initialRouteName='Stations'
       tabBarOptions={{
-        activeTintColor: 'red',
-        style: { backgroundColor: '#f7fcff' }
+        activeTintColor: theme.bottomTabNavActive,
+        inactiveTintColor: theme.bottomTabNavInactive,
+        style: { backgroundColor: theme.bottomTabNavBackground }
       }}
     >
       <Tab.Screen
@@ -87,6 +95,7 @@ const BottomTab = () => {
 export default Routes = () => {
   const Stack = createStackNavigator()
   const { t } = useTranslation()
+  const { theme, dark } = useContext(ThemeContext)
 
   const getHeaderTitle = route => {
     // Accessing the tab navigator's state using 'getFocusedRouteNameFromRoute'
@@ -111,12 +120,30 @@ export default Routes = () => {
     }
   }
 
+  /**
+   * Global Theme
+   * Source is based on ThemeContext api
+   * Colors object props are set by default on each screen.
+   **/
+
+  const globalTheme = {
+    dark: dark,
+    colors: {
+      border: theme.border,
+      background: theme.backgroundColor
+    },
+    theme: { ...theme }
+  }
+
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={globalTheme}>
       <Stack.Navigator
         screenOptions={{
-          headerStyle: { backgroundColor: '#ebf7ff' },
-          headerTitleAlign: 'center'
+          headerStyle: {
+            backgroundColor: theme.headerBackground
+          },
+          headerTitleAlign: 'center',
+          headerTintColor: theme.headerColor
         }}
       >
         <Stack.Screen
@@ -130,17 +157,17 @@ export default Routes = () => {
         <Stack.Screen
           name='Timetable'
           component={Timetable}
-          options={{ title: t('routes.timetable') }}
+          options={{ title: t('routes.timetable'), animationEnabled: false }}
         />
         <Stack.Screen
           name='Feedback'
           component={Feedback}
-          options={{ title: t('routes.feedback') }}
+          options={{ title: t('routes.feedback'), animationEnabled: false }}
         />
         <Stack.Screen
           name='LinesMap'
           component={LinesMap}
-          options={{ title: t('routes.linesMap') }}
+          options={{ title: t('routes.linesMap'), animationEnabled: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
