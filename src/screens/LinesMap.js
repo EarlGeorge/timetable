@@ -33,10 +33,11 @@ const LinesMap = ({ route }) => {
    * API request sample.
    * https://xxxxxxx:xxxx/xxxxxxxxx/?route=${busNumber}&forward=${forward}
    **/
-  const endPointEn = `sorry API is hidden`
-  const endPointGe = `sorry API is hidden`
 
-  const endPoint = i18n.language == 'en' ? endPointEn : endPointGe
+  const endPoint =
+    i18n.language == 'en'
+      ? `${process.env.API_LINESMAP_EN + busNumber + '&forward=' + forward}`
+      : `${process.env.API_LINESMAP_GE + busNumber + '&forward=' + forward}`
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {

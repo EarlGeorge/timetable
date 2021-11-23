@@ -14,12 +14,6 @@ import { useTranslation } from 'react-i18next'
 // Component
 import Form from '../components/Form'
 
-// Sends Form input to your email using sendGrid!
-const sendGridApiKey = '***'
-const sendTo = '***'
-const sendFrom = '***'
-const subject = 'Bus Timetable Feedback'
-
 /**
  * Feedback screen
  **/
@@ -37,21 +31,21 @@ const Feedback = () => {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + sendGridApiKey
+        Authorization: 'Bearer ' + process.env.API_SEND_GRID_KEY
       },
       body: JSON.stringify({
         personalizations: [
           {
             to: [
               {
-                email: sendTo
+                email: process.env.SEND_GRID_EMAIL_TO
               }
             ],
-            subject: subject
+            subject: 'Bus Timetable Feedback'
           }
         ],
         from: {
-          email: sendFrom
+          email: process.env.SEND_GRID_EMAIL_FROM
         },
         content: [
           {

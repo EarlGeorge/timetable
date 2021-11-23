@@ -35,10 +35,11 @@ const Timetable = ({ route }) => {
    * API request sample.
    * https://xxxxxxx:xxxx/xxxxxxxxxxxx/?station=${stationTimetableId}
    **/
-  const endPointEn = `sorry API is hidden`
-  const endPointGe = `sorry API is hidden`
 
-  const endPoint = i18n.language == 'en' ? endPointEn : endPointGe
+  const endPoint =
+    i18n.language == 'en'
+      ? `${process.env.API_TIMETABLE_EN + stationTimetableId}`
+      : `${process.env.API_TIMETABLE_GE + stationTimetableId}`
 
   // Local Time string object
   const [localTime, setLocalTime] = useState('')
